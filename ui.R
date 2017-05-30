@@ -3,31 +3,27 @@
 # run the application by clicking 'Run App' above.
 #
 # Find out more about building applications with Shiny here:
-# 
+#
 #    http://shiny.rstudio.com/
 #
 
+
+# Make sure a package is at least some version (only installs from CRAN)
+ensure_version <- function(pkg, ver = "0.0") {
+  if (system.file(package = pkg)  == "" || packageVersion(pkg) < ver)
+    install.packages(pkg)
+}
+
+ensure_version("shiny", "1.0.0")
+ensure_version("shinydashboard", "0.5.3")
+
 library(shiny)
+library(shinydashboard)
+
 
 # Define UI for application that draws a histogram
-shinyUI(fluidPage(
-  
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-  
-  # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
-    ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-       plotOutput("distPlot")
-    )
-  )
+shinyUI(dashboardPage(
+  dashboardHeader(),
+  dashboardSidebar(),
+  dashboardBody()
 ))
