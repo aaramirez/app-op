@@ -35,13 +35,13 @@ shinyServer(function(input, output) {
              sep = input$sep, quote = input$quote)
   })
 
-  prices<- reactive({
-    SMALLCAP[,data()$SYMBOLS]
-  })
+  prices<- function() {
+    SMALLCAP[, data()$SYMBOLS]
+  }
 
-  returns<- reactive({
-    SMALLCAP.RET[,data()$SYMBOLS]
-  })
+  returns<- function() {
+    SMALLCAP.RET[, data()$SYMBOLS]
+  }
 
   output$datatable <- renderTable({
     data()
@@ -59,13 +59,11 @@ shinyServer(function(input, output) {
   })
 
   output$priceplot<- renderPlot({
-    indprices<-prices()[, input$symbol]
-    plot(indprices)
+    plot(prices()[, input$symbol])
   })
 
   output$returnplot<- renderPlot({
-    indreturns<-returns()[, input$symbol]
-    plot(indreturns)
+    plot(returns()[, input$symbol])
   })
 
   output$meanvalue<- renderValueBox({
