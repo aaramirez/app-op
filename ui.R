@@ -15,7 +15,7 @@ library(shinydashboard)
 source("text.R")
 
 header<-dashboardHeader(
-  title = tagList(shiny::icon("briefcase"), APPTITLE),
+  title = tagList(icon("briefcase"), APPTITLE),
   titleWidth = "300px")
 
 menu<-dashboardSidebar(sidebarMenu(id = "menuitems",
@@ -31,7 +31,7 @@ datatab<-tabItem(
   tabName = "data",
   fluidRow(
     box(width = 3, title = "Cargar lista de símbolos",
-        fileInput('file_w_data', 'Seleccione el archivo con los símbolos',
+        fileInput('file_w_data', 'Seleccione el archivo de símbolos',
                   accept = c(
                     'text/csv',
                     'text/comma-separated-values',
@@ -44,9 +44,9 @@ datatab<-tabItem(
         tags$hr(),
         checkboxInput('header', 'Con Encabezado', TRUE),
         radioButtons('sep', 'Separador',
-                     c(Comma=',',
-                       Semicolon=';',
-                       Tab='\t'),
+                     c('Coma'=',',
+                       'Punto y coma'=';',
+                       'Tab'='\t'),
                      ','),
         radioButtons('quote', 'Comillas',
                      c('Ninguna'='',
@@ -61,13 +61,16 @@ datatab<-tabItem(
           'y luego utilicelo.'
         )
     ),
-    tabBox(width = 9, title = "Símbolos y Retornos",
-           tabPanel(icon = icon("check-circle"), title = "Lista de símbolos",
-                    tableOutput('datatable')
-           ),
-           tabPanel(icon = icon("check-circle"),title = "Retorno de los datos",
-                    tableOutput('returntable')
-           )
+    tabBox(
+      width = 9, title = "Símbolos y Retornos",
+      tabPanel(
+        icon = icon("check-circle"), title = "Lista de símbolos",
+        tableOutput('datatable')
+      ),
+      tabPanel(
+        icon = icon("check-circle"),title = "Retorno de los datos",
+        tableOutput('returntable')
+      )
     )
   )
 )
