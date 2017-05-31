@@ -43,6 +43,7 @@ shinyServer(function(input, output) {
   })
 
   output$returntable<- renderTable({
-    SMALLCAP.RET[,as.vector(data())]
+    #TODO: Obtener los datos de la lista de símbolos
+    SMALLCAP.RET[,data()$SYMBOLS]
   })
 })
