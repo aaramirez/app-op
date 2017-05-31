@@ -19,7 +19,6 @@ options(shiny.maxRequestSize = 1*1024^2)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-  lista<-c()
   data <- reactive({
     # input$file1 will be NULL initially. After the user selects
     # and uploads a file, it will be a data frame with 'name',
@@ -36,12 +35,55 @@ shinyServer(function(input, output) {
              sep = input$sep, quote = input$quote)
   })
 
+  prices<- function() {
+    SMALLCAP[, data()$SYMBOLS]
+  }
+
+  returns<- function() {
+    SMALLCAP.RET[, data()$SYMBOLS]
+  }
+
   output$datatable <- renderTable({
     data()
   })
 
   output$returntable<- renderTable({
     #TODO: Obtener los datos de la lista de símbolos
-    SMALLCAP.RET[,data()$SYMBOLS]
+    returns()
   })
+
+  output$symbollist<- renderUI({
+    selectInput("symbol", "Seleccione el símbolo:",
+                choices = data()$SYMBOLS
+    )
+  })
+
+  output$priceplot<- renderPlot({
+    plot(prices()[, input$symbol])
+  })
+
+  output$returnplot<- renderPlot({
+    plot(returns()[, input$symbol])
+  })
+
+  output$meanvalue<- renderValueBox({
+    valueBox(
+      round(mean(prices()[, input$symbol]), digits = 4), "Media", icon = icon("sort-desc")
+    )
+  })
+
+  output$varvalue<- renderValueBox({
+    valueBox(
+      round(stdev(prices()[, input$symbol])^2, digits = 4), "Varianza", icon = icon("line-chart"),
+      color = "purple"
+    )
+  })
+
+  output$stddevvalue<- renderValueBox({
+    valueBox(
+      round(stdev(prices()[, input$symbol]), digits = 4), "Desviación estandar", icon = icon("arrows-h"),
+      color = "yellow"
+    )
+  })
+
 })

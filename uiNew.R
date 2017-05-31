@@ -52,7 +52,7 @@ datatab<-tabItem(
                      c('Ninguna'='',
                        'Comilla doble'='"',
                        'Comilla simple'="'"),
-                     '"'),
+                     ''),
         tags$hr(),
         #TODO: Colocar el archivo de prueba en la nube y arreglar el URL
         p('Si desea puede trabajar con un archivo de ejemplo .csv,',
@@ -87,12 +87,51 @@ optimizetab<-tabItem(
 
 individualtab<-tabItem(
   tabName = "individual",
-  h1("Datos del Instrumento")
+  fluidRow(
+    box(width = 12, title = "Datos de los instrumentos",
+        uiOutput("symbollist")
+    )
+  ),
+  fluidRow(
+    valueBoxOutput("meanvalue"),
+    valueBoxOutput("varvalue"),
+    valueBoxOutput("stddevvalue")
+  ),
+  fluidRow(
+    box(width = 6, title = "Precio",
+        plotOutput("priceplot")
+    ),
+    box(width = 6, title = "Retornos",
+        plotOutput("returnplot")
+    )
+  )
 )
 
 pairstab<-tabItem(
   tabName = "pairs",
-  h1("Comparación de instrumentos")
+  fluidRow(
+    box(width = 12, title = "Instrumentos a comparar",
+        uiOutput("symbollist"),
+        uiOutput("symbollist")
+    )
+  ),
+  fluidRow(
+    valueBoxOutput("Covarianza"),
+    valueBoxOutput("Correlación")
+  ),
+  fluidRow(
+    box(width = 6, title = "Precios",
+        plotOutput("priceplot")
+    ),
+    box(width = 6, title = "Retornos",
+        plotOutput("returnplot")
+    )
+  ),
+  fluidRow(
+    box(width = 6, title = "Fuerza relativa",
+        plotOutput("returnplot")
+    )
+  )
 )
 
 markettab<-tabItem(
@@ -113,4 +152,3 @@ shinyUI(
                 menu,
                 body
   ))
-
