@@ -87,7 +87,24 @@ optimizetab<-tabItem(
 
 individualtab<-tabItem(
   tabName = "individual",
-  h1("Datos del Instrumento")
+  fluidRow(
+    box(width = 12, title = "Datos de los instrumentos",
+      uiOutput("symbollist")
+    )
+  ),
+  fluidRow(
+    valueBoxOutput("meanvalue"),
+    valueBoxOutput("varvalue"),
+    valueBoxOutput("stddevvalue")
+  ),
+  fluidRow(
+    box(width = 6, title = "Precio",
+        plotOutput("priceplot")
+    ),
+    box(width = 6, title = "Retornos",
+        plotOutput("returnplot")
+    )
+  )
 )
 
 pairstab<-tabItem(
