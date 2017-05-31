@@ -108,9 +108,11 @@ body<-dashboardBody(
 
 # Define UI
 shinyUI(
-  dashboardPage(skin = "green",
-                header,
-                menu,
-                body
-  ))
+  dashboardPage(
+    skin = "green",
+    header,
+    menu,
+    body
+  )
+)
 
