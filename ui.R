@@ -109,7 +109,29 @@ individualtab<-tabItem(
 
 pairstab<-tabItem(
   tabName = "pairs",
-  h1("Comparación de instrumentos")
+  fluidRow(
+    box(width = 12, title = "Instrumentos a comparar",
+        uiOutput("symbollist"),
+        uiOutput("symbollist")
+    )
+  ),
+  fluidRow(
+    valueBoxOutput("Covarianza"),
+    valueBoxOutput("Correlación")
+  ),
+  fluidRow(
+    box(width = 6, title = "Precios",
+        plotOutput("priceplot")
+    ),
+    box(width = 6, title = "Retornos",
+        plotOutput("returnplot")
+    )
+  ),
+  fluidRow(
+    box(width = 6, title = "Fuerza relativa",
+        plotOutput("returnplot")
+    )
+  )
 )
 
 markettab<-tabItem(
