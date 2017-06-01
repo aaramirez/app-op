@@ -119,8 +119,8 @@ pairstab<-tabItem(
     )
   ),
   fluidRow(
-    valueBoxOutput("Covarianza"),
-    valueBoxOutput("Correlacion")
+    valueBoxOutput("covarvalue"),
+    valueBoxOutput("correlvalue")
   ),
   fluidRow(
     box(width = 6, title = "Precios",

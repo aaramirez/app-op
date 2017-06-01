@@ -69,7 +69,7 @@ shinyServer(function(input, output) {
 
   output$meanvalue<- renderValueBox({
     valueBox(
-      round(mean(prices()[, input$symbol]), digits = 4), "Media", icon = icon("sort-desc")
+      round(mean(prices()[, input$symbol]), digits = 4), "Media", icon = icon("balance-scale")
     )
   })
 
