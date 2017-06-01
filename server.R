@@ -108,14 +108,16 @@ shinyServer(function(input, output) {
 
   output$covarvalue<- renderValueBox({
     valueBox(
-      round(stdev(prices()[, input$symbol])^2, digits = 4), "Covarianza", icon = icon("line-chart"),
+      round(cov(prices()[, input$symbol2],prices()[, input$symbol3]), digits = 4),
+      "Covarianza", icon = icon("line-chart"),
       color = "purple"
     )
   })
 
   output$correlvalue<- renderValueBox({
     valueBox(
-      round(stdev(prices()[, input$symbol]), digits = 4), "Correlación", icon = icon("arrows-h"),
+      round(cor(prices()[, input$symbol2],prices()[, input$symbol3]), digits = 4),
+      "Correlación", icon = icon("arrows-h"),
       color = "yellow"
     )
   })
@@ -132,6 +134,6 @@ shinyServer(function(input, output) {
     plot(prices()[, input$symbol2]/prices()[, input$symbol3])
   })
 
-
   ## pairs tab outputs - End
+
 })
