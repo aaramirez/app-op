@@ -31,8 +31,10 @@ shinyServer(function(input, output) {
 
     if (is.null(inFile))
       return(NULL)
+    #read.csv(inFile$datapath, header = input$header,
+    #         sep = input$sep, quote = input$quote)
 
-    read.csv(inFile$datapath, header = input$header,
+    read.csv("smallcap.csv", header = input$header,
              sep = input$sep, quote = input$quote)
   })
 
@@ -59,6 +61,19 @@ shinyServer(function(input, output) {
     )
   })
 
+  output$symbollist2<- renderUI({
+    selectInput("symbol2", "",
+                choices = data()$SYMBOLS
+    )
+  })
+
+  output$symbollist3<- renderUI({
+    selectInput("symbol3", "",
+                choices = data()$SYMBOLS
+    )
+  })
+
+  ## individual tab outputs - Begin
   output$priceplot<- renderPlot({
     plot(prices()[, input$symbol])
   })
@@ -86,4 +101,37 @@ shinyServer(function(input, output) {
       color = "yellow"
     )
   })
+
+  ## individual tab outputs - End
+
+  ## pairs tab outputs - Begin
+
+  output$covarvalue<- renderValueBox({
+    valueBox(
+      round(stdev(prices()[, input$symbol])^2, digits = 4), "Covarianza", icon = icon("line-chart"),
+      color = "purple"
+    )
+  })
+
+  output$correlvalue<- renderValueBox({
+    valueBox(
+      round(stdev(prices()[, input$symbol]), digits = 4), "Correlación", icon = icon("arrows-h"),
+      color = "yellow"
+    )
+  })
+
+  output$pricesplot<- renderPlot({
+    plot(prices()[, input$symbol2])
+  })
+
+  output$returnsplot<- renderPlot({
+    plot(returns()[, input$symbol2])
+  })
+
+  output$rsplot<- renderPlot({
+    plot(prices()[, input$symbol2]/prices()[, input$symbol3])
+  })
+
+
+  ## pairs tab outputs - End
 })

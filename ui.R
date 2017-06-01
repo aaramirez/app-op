@@ -21,11 +21,11 @@ header<-dashboardHeader(
 menu<-dashboardSidebar(
   sidebarMenu(
     id = "menuitems",
-    menuItem("Datos", tabName = "data", icon=icon("table"), selected = TRUE),
+    menuItem("Datos", tabName = "data", icon=icon("table")),
     menuItem("Estadísticas", tabName = "stats", icon=icon("pie-chart")),
     menuItem("Optimización", tabName = "optimize", icon=icon("area-chart")),
     menuItem("Instrumento", tabName="individual", icon=icon("file-o")),
-    menuItem("Pares", tabName="pairs", icon=icon("files-o")),
+    menuItem("Pares", tabName="pairs", icon=icon("files-o"), selected = TRUE),
     menuItem("Mercado", tabName = "market", icon=icon("building"))
   )
 )
@@ -112,7 +112,31 @@ individualtab<-tabItem(
 
 pairstab<-tabItem(
   tabName = "pairs",
-  h1("Comparación de instrumentos")
+  fluidRow(
+    box(width = 6, title = "Escoga el primer instrumento",
+        uiOutput("symbollist2")
+    ),
+    box(width = 6, title = "Escoga el segundo instrumento",
+        uiOutput("symbollist3")
+    )
+  ),
+  fluidRow(
+      valueBoxOutput("covarvalue", width = 6),
+      valueBoxOutput("correlvalue", width = 6)
+  ),
+  fluidRow(
+    box(width = 6, title = "Precios",
+        plotOutput("pricesplot")
+    ),
+    box(width = 6, title = "Retornos",
+        plotOutput("returnsplot")
+    )
+  ),
+  fluidRow(
+    box(width = 6, title = "Fuerza relativa",
+        plotOutput("rsplot")
+    )
+  )
 )
 
 markettab<-tabItem(
