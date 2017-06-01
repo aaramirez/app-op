@@ -31,11 +31,9 @@ shinyServer(function(input, output) {
 
     if (is.null(inFile))
       return(NULL)
-    #read.csv(inFile$datapath, header = input$header,
-    #         sep = input$sep, quote = input$quote)
-
-    read.csv("smallcap.csv", header = input$header,
+    read.csv(inFile$datapath, header = input$header,
              sep = input$sep, quote = input$quote)
+
   })
 
   prices<- function() {

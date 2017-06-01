@@ -21,11 +21,11 @@ header<-dashboardHeader(
 menu<-dashboardSidebar(
   sidebarMenu(
     id = "menuitems",
-    menuItem("Datos", tabName = "data", icon=icon("table")),
+    menuItem("Datos", tabName = "data", icon=icon("table"), selected = TRUE),
     menuItem("Estadísticas", tabName = "stats", icon=icon("pie-chart")),
     menuItem("Optimización", tabName = "optimize", icon=icon("area-chart")),
     menuItem("Instrumento", tabName="individual", icon=icon("file-o")),
-    menuItem("Pares", tabName="pairs", icon=icon("files-o"), selected = TRUE),
+    menuItem("Pares", tabName="pairs", icon=icon("files-o")),
     menuItem("Mercado", tabName = "market", icon=icon("building"))
   )
 )
