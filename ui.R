@@ -80,12 +80,30 @@ datatab<-tabItem(
 
 statstab<-tabItem(
   tabName = "stats",
-  h1("Estadísticas del Portafolio")
+  fluidRow(
+    box(width = 12, title = "Medias",
+        verbatimTextOutput("meantable")
+    ),
+    box(width = 12, title = "Matriz de Varianza y Covarianza",
+        verbatimTextOutput("varcovartable")
+    )
+  )
 )
 
 optimizetab<-tabItem(
   tabName = "optimize",
-  h1("Optimización del Portafolio")
+  fluidRow(
+    box(width = 12, title = "Frontera eficiente",
+        plotOutput("efplot")
+    ),
+    box(width = 12, title = "Gráfico de pesos",
+        plotOutput("wplot")
+    ),
+    box(width = 12, title = "Portafolio de Varianza Mínima",
+        sliderInput("mvmu", label="mu", min=0, max = 3, value = 0.05, step = 0.01),
+        verbatimTextOutput("vmtext")
+    )
+  )
 )
 
 individualtab<-tabItem(

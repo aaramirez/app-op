@@ -8,10 +8,12 @@ ensure_version <- function(pkg, ver = "0.0") {
 ensure_version("shiny", "1.0.0")
 ensure_version("shinydashboard", "0.5.3")
 ensure_version("fPortfolio", "3011.81")
+ensure_version("knitr", "1.15.1")
 
 library(shiny)
 library(shinydashboard)
 library(fPortfolio)
+library(knitr)
 
 # By default, the file size limit is 5MB. It can be changed by
 # setting this option. Here we'll lower limit to 1MB.
@@ -71,7 +73,53 @@ shinyServer(function(input, output) {
     )
   })
 
+  ## stats tab outputs - Begin
+  covData<- reactive({
+    covEstimator(returns())
+  })
+
+  output$meantable <- renderPrint({
+    covData()$mu
+  })
+
+  output$varcovartable <- renderPrint({
+    covData()$Sigma
+  })
+
+  ## stats tab outputs - End
+
+  ## optimize tab outputs - Begin
+
+  frontierCalc <- reactive({
+    shortSpec<-portfolioSpec()
+    setSolver(shortSpec)<-"solveRshortExact"
+    portfolioFrontier(returns(), spec=shortSpec,constraints="Short")
+  })
+
+  output$efplot <- renderPlot({
+    #print(shortFrontier)
+    frontierPlot(frontierCalc(), frontier = "both", risk="Sigma", type="l")
+    minvariancePoints(frontierCalc(), pch=19, col="red")
+    singleAssetPoints(frontierCalc(), risk = "Sigma", pch=19, cex=1.5, col=topo.colors(6))
+  })
+
+  output$wplot <- renderPlot({
+    weightsPlot(frontierCalc())
+  })
+
+  output$vmtext <- renderPrint({
+    minvariancePortfolio(returns())
+    Spec = portfolioSpec()
+    setSolver(Spec)<-"solveRshortExact"
+    setTargetReturn(Spec) = input$mvmu
+    efficientPortfolio(returns(), Spec)
+  })
+
+  ## optimize tab outputs - End
+
+
   ## individual tab outputs - Begin
+
   output$priceplot<- renderPlot({
     plot(prices()[, input$symbol])
   })
