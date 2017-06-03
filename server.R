@@ -33,31 +33,30 @@ shinyServer(function(input, output) {
 
     if (is.null(inFile))
       return(NULL)
-    as.timeSeries(read.csv(inFile$datapath, header = input$header,
-             sep = input$sep, quote = input$quote))
+    read.csv(inFile$datapath, header = input$header,
+             sep = input$sep, quote = input$quote)
 
   })
 
   prices<- function() {
-    data()
+    as.timeSeries(data())
   }
 
   returns<- function() {
-    returnsresult<-rev(data())
+    returnsresult<-rev(prices())
     returnsresult<-diff(returnsresult)/returnsresult[,-length(returnsresult)]
     returnsresult[-1,]
   }
 
   symbols<- function() {
-    names(data())
+    names(prices())
   }
 
   output$datatable <- renderTable({
-    data()
+    prices()
   })
 
   output$returntable<- renderTable({
-    #TODO: Obtener los datos de la lista de símbolos
     returns()
   })
 
