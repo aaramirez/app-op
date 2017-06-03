@@ -125,14 +125,6 @@ shinyServer(function(input, output) {
 
   ## individual tab outputs - Begin
 
-  output$priceplot<- renderPlot({
-    plot(prices()[, input$symbol])
-  })
-
-  output$returnplot<- renderPlot({
-    plot(returns()[, input$symbol])
-  })
-
   output$meanvalue<- renderValueBox({
     valueBox(
       round(mean(returns()[, input$symbol]), digits = 4), "Media", icon = icon("balance-scale")
@@ -151,6 +143,27 @@ shinyServer(function(input, output) {
       round(stdev(returns()[, input$symbol]), digits = 4), "Desviación estandar", icon = icon("arrows-h"),
       color = "yellow"
     )
+  })
+
+  output$priceplot<- renderPlot({
+    plot(prices()[, input$symbol])
+  })
+
+  output$returnplot<- renderPlot({
+    plot(returns()[, input$symbol])
+  })
+
+  output$returnshistplot<- renderPlot({
+    rdata<-returns()[, input$symbol]
+    h<-hist(rdata, freq = FALSE, main = "", xlab = "returns")
+    #xfit<-seq(min(rdata),max(rdata),length=100)
+    #yfit<-dnorm(xfit,mean=mean(rdata),sd=sd(rdata))
+    #yfit <- yfit*diff(h$mids[1:2])*length(rdata)
+    #lines(xfit, yfit, col="blue", lwd=2)
+  })
+
+  output$returnsdensityplot<- renderPlot({
+    plot(density(returns()[, input$symbol]), main="")
   })
 
   ## individual tab outputs - End
@@ -174,11 +187,17 @@ shinyServer(function(input, output) {
   })
 
   output$pricesplot<- renderPlot({
-    plot(prices()[, input$symbol2])
+    plot( prices()[, input$symbol2])
+    lines(prices()[, input$symbol3],
+          ylim=c(max(max(prices()[, input$symbol2]), max(prices()[, input$symbol3]))),
+          col="blue")
   })
 
   output$returnsplot<- renderPlot({
-    plot(returns()[, input$symbol2])
+    plot( returns()[, input$symbol2])
+    lines(returns()[, input$symbol3],
+          ylim=c(max(max(returns()[, input$symbol2]), max(returns()[, input$symbol3]))),
+          col="blue")
   })
 
   output$rsplot<- renderPlot({

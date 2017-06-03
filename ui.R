@@ -125,6 +125,14 @@ individualtab<-tabItem(
     box(width = 6, title = "Retornos",
         plotOutput("returnplot")
     )
+  ),
+  fluidRow(
+    box(width = 6, title = "Histograma de retornos",
+        plotOutput("returnshistplot")
+    ),
+    box(width = 6, title = "Kernel",
+        plotOutput("returnsdensityplot")
+    )
   )
 )
 
