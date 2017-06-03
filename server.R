@@ -43,7 +43,11 @@ shinyServer(function(input, output) {
   }
 
   returns<- function() {
-    returnsresult<-exp(diff(log(prices()))) - 1
+    if (input$returnsType == "arithmetic") {
+      returnsresult<-exp(diff(log(prices()))) - 1
+    } else {
+      returnsresult<-diff(log(prices()))
+    }
     returnsresult[-1,]
   }
 

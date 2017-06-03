@@ -72,6 +72,11 @@ datatab<-tabItem(
       ),
       tabPanel(
         icon = icon("check-circle"),title = "Retorno de los datos",
+        fluidRow(
+          box(radioButtons(inputId = "returnsType",
+                           label = "Tipo de retorno",
+                           choices = list("Aritmético"="arithmetic", "Logarítmico"="log")), width = 12)
+        ),
         tableOutput('returntable')
       )
     )
