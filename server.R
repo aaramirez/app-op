@@ -43,8 +43,7 @@ shinyServer(function(input, output) {
   }
 
   returns<- function() {
-    returnsresult<-rev(prices())
-    returnsresult<-diff(returnsresult)/returnsresult[,-length(returnsresult)]
+    returnsresult<-exp(diff(log(prices()))) - 1
     returnsresult[-1,]
   }
 
@@ -53,11 +52,11 @@ shinyServer(function(input, output) {
   }
 
   output$datatable <- renderTable({
-    prices()
+    round(prices(), digits = 6)
   })
 
   output$returntable<- renderTable({
-    returns()
+    round(returns(), digits = 6)
   })
 
   output$symbollist<- renderUI({
@@ -127,20 +126,20 @@ shinyServer(function(input, output) {
 
   output$meanvalue<- renderValueBox({
     valueBox(
-      round(mean(returns()[, input$symbol]), digits = 4), "Media", icon = icon("balance-scale")
+      round(mean(returns()[, input$symbol]), digits = 6), "Media", icon = icon("balance-scale")
     )
   })
 
   output$varvalue<- renderValueBox({
     valueBox(
-      round(stdev(returns()[, input$symbol])^2, digits = 4), "Varianza", icon = icon("line-chart"),
+      round(stdev(returns()[, input$symbol])^2, digits = 6), "Varianza", icon = icon("line-chart"),
       color = "purple"
     )
   })
 
   output$stddevvalue<- renderValueBox({
     valueBox(
-      round(stdev(returns()[, input$symbol]), digits = 4), "Desviación estandar", icon = icon("arrows-h"),
+      round(stdev(returns()[, input$symbol]), digits = 6), "Desviación estandar", icon = icon("arrows-h"),
       color = "yellow"
     )
   })
@@ -172,7 +171,7 @@ shinyServer(function(input, output) {
 
   output$covarvalue<- renderValueBox({
     valueBox(
-      round(cov(returns()[, input$symbol2],returns()[, input$symbol3]), digits = 4),
+      round(cov(returns()[, input$symbol2],returns()[, input$symbol3]), digits = 6),
       "Covarianza", icon = icon("line-chart"),
       color = "purple"
     )
@@ -180,23 +179,29 @@ shinyServer(function(input, output) {
 
   output$correlvalue<- renderValueBox({
     valueBox(
-      round(cor(returns()[, input$symbol2],returns()[, input$symbol3]), digits = 4),
+      round(cor(returns()[, input$symbol2],returns()[, input$symbol3]), digits = 6),
       "Correlación", icon = icon("arrows-h"),
       color = "yellow"
     )
   })
 
   output$pricesplot<- renderPlot({
-    plot( prices()[, input$symbol2])
+    plot( prices()[, input$symbol2],
+          ylim=c(min(min(prices()[, input$symbol2]),
+                     min(prices()[, input$symbol3])),
+                 max(max(prices()[, input$symbol2]),
+                     max(prices()[, input$symbol3]))))
     lines(prices()[, input$symbol3],
-          ylim=c(max(max(prices()[, input$symbol2]), max(prices()[, input$symbol3]))),
           col="blue")
   })
 
   output$returnsplot<- renderPlot({
-    plot( returns()[, input$symbol2])
+    plot( returns()[, input$symbol2],
+          ylim=c(min(min(returns()[, input$symbol2]),
+                     min(returns()[, input$symbol3])),
+                 max(max(returns()[, input$symbol2]),
+                     max(returns()[, input$symbol3]))))
     lines(returns()[, input$symbol3],
-          ylim=c(max(max(returns()[, input$symbol2]), max(returns()[, input$symbol3]))),
           col="blue")
   })
 
