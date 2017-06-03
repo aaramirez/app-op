@@ -33,17 +33,23 @@ shinyServer(function(input, output) {
 
     if (is.null(inFile))
       return(NULL)
-    read.csv(inFile$datapath, header = input$header,
-             sep = input$sep, quote = input$quote)
+    as.timeSeries(read.csv(inFile$datapath, header = input$header,
+             sep = input$sep, quote = input$quote))
 
   })
 
   prices<- function() {
-    SMALLCAP[, data()$SYMBOLS]
+    data()
   }
 
   returns<- function() {
-    SMALLCAP.RET[, data()$SYMBOLS]
+    returnsresult<-rev(data())
+    returnsresult<-diff(returnsresult)/returnsresult[,-length(returnsresult)]
+    returnsresult[-1,]
+  }
+
+  symbols<- function() {
+    names(data())
   }
 
   output$datatable <- renderTable({
@@ -57,19 +63,19 @@ shinyServer(function(input, output) {
 
   output$symbollist<- renderUI({
     selectInput("symbol", "Seleccione el símbolo:",
-                choices = data()$SYMBOLS
+                choices = symbols()
     )
   })
 
   output$symbollist2<- renderUI({
     selectInput("symbol2", "",
-                choices = data()$SYMBOLS
+                choices = symbols()
     )
   })
 
   output$symbollist3<- renderUI({
     selectInput("symbol3", "",
-                choices = data()$SYMBOLS
+                choices = symbols()
     )
   })
 
@@ -130,20 +136,20 @@ shinyServer(function(input, output) {
 
   output$meanvalue<- renderValueBox({
     valueBox(
-      round(mean(prices()[, input$symbol]), digits = 4), "Media", icon = icon("balance-scale")
+      round(mean(returns()[, input$symbol]), digits = 4), "Media", icon = icon("balance-scale")
     )
   })
 
   output$varvalue<- renderValueBox({
     valueBox(
-      round(stdev(prices()[, input$symbol])^2, digits = 4), "Varianza", icon = icon("line-chart"),
+      round(stdev(returns()[, input$symbol])^2, digits = 4), "Varianza", icon = icon("line-chart"),
       color = "purple"
     )
   })
 
   output$stddevvalue<- renderValueBox({
     valueBox(
-      round(stdev(prices()[, input$symbol]), digits = 4), "Desviación estandar", icon = icon("arrows-h"),
+      round(stdev(returns()[, input$symbol]), digits = 4), "Desviación estandar", icon = icon("arrows-h"),
       color = "yellow"
     )
   })
@@ -154,7 +160,7 @@ shinyServer(function(input, output) {
 
   output$covarvalue<- renderValueBox({
     valueBox(
-      round(cov(prices()[, input$symbol2],prices()[, input$symbol3]), digits = 4),
+      round(cov(returns()[, input$symbol2],returns()[, input$symbol3]), digits = 4),
       "Covarianza", icon = icon("line-chart"),
       color = "purple"
     )
@@ -162,7 +168,7 @@ shinyServer(function(input, output) {
 
   output$correlvalue<- renderValueBox({
     valueBox(
-      round(cor(prices()[, input$symbol2],prices()[, input$symbol3]), digits = 4),
+      round(cor(returns()[, input$symbol2],returns()[, input$symbol3]), digits = 4),
       "Correlación", icon = icon("arrows-h"),
       color = "yellow"
     )
