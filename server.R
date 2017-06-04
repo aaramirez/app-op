@@ -140,6 +140,12 @@ shinyServer(function(input, output) {
     stats::quantile(returns(), probs=seq(0, 1, 0.05), type=as.integer(input$quantiletype))
   })
 
+  output$returnscolquantilestext<- renderPrint({
+    timeSeries::colQuantiles(returns(),
+                             prob=as.double(input$quantileprob),
+                             type=as.integer(input$quantiletype2))
+  })
+
   output$meantable <- renderPrint({
     covData()$mu
   })

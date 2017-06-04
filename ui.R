@@ -117,10 +117,30 @@ statstab<-tabItem(
                           choices = c("1"="1", "2"="2", "3"="3",
                                       "4"="4", "5"="5", "6"="6",
                                       "7"="7", "8"="8", "9"="9")
-                          )
-          ),
-          box(width = 12, title = "Cuantiles",
+                          ),
               verbatimTextOutput("returnsquantilestext")
+          ),
+          box(width = 12, title = "Cuantiles de los retornos de cada instrumento",
+              fluidRow(
+                box(width = 6, title = "",
+                sliderInput(inputId = "quantileprob",
+                            label = "Cuantil",
+                            min = 0,
+                            max = 1,
+                            value = 0.05,
+                            step = 0.01
+                            )
+                ),
+                box(width = 6, title = "",
+                selectInput(inputId = "quantiletype2",
+                          label = "Tipo de cálculo",
+                          choices = c("1"="1", "2"="2", "3"="3",
+                                      "4"="4", "5"="5", "6"="6",
+                                      "7"="7", "8"="8", "9"="9")
+                          )
+                )
+              ),
+              verbatimTextOutput("returnscolquantilestext")
           )
         )
       ),
