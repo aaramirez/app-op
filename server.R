@@ -244,11 +244,11 @@ shinyServer(function(input, output) {
   })
 
   output$priceplot<- renderPlot({
-    plot(prices()[, input$symbol])
+    seriesPlot(prices()[, input$symbol])
   })
 
   output$returnplot<- renderPlot({
-    plot(returns()[, input$symbol])
+    seriesPlot(returns()[, input$symbol])
   })
 
   output$returnshistplot<- renderPlot({
@@ -273,7 +273,7 @@ shinyServer(function(input, output) {
     turnsvar<-turnpoints()
     peaks<-turnsvar[turnsvar@recordIDs[,"peaks"]==TRUE,]
     pits<-turnsvar[turnsvar@recordIDs[,"pits"]==TRUE,]
-    plot(smoothlowess()[,input$symbol])
+    seriesPlot(smoothlowess()[,input$symbol])
     lines(smoothlowess()[,"lowess"], col="blue", lwd=2)
     points(peaks, col="green3", pch=24)
     points(pits, col="red", pch=25)
@@ -312,7 +312,7 @@ shinyServer(function(input, output) {
   })
 
   output$pricesplot<- renderPlot({
-    plot( prices()[, input$symbol2],
+    seriesPlot( prices()[, input$symbol2],
           ylim=c(min(min(prices()[, input$symbol2]),
                      min(prices()[, input$symbol3])),
                  max(max(prices()[, input$symbol2]),
@@ -322,7 +322,7 @@ shinyServer(function(input, output) {
   })
 
   output$returnsplot<- renderPlot({
-    plot( returns()[, input$symbol2],
+    seriesPlot( returns()[, input$symbol2],
           ylim=c(min(min(returns()[, input$symbol2]),
                      min(returns()[, input$symbol3])),
                  max(max(returns()[, input$symbol2]),
