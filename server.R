@@ -136,6 +136,10 @@ shinyServer(function(input, output) {
     fBasics::basicStats(returns())
   })
 
+  output$returnsquantilestext<- renderPrint({
+    stats::quantile(returns(), probs=seq(0, 1, 0.05), type=as.integer(input$quantiletype))
+  })
+
   output$meantable <- renderPrint({
     covData()$mu
   })

@@ -104,10 +104,25 @@ statstab<-tabItem(
       ),
       tabPanel(
         icon = icon("check-circle"), title = "Estadísticas básicas",
-        h2("Estadísticas de los precios"),
-        verbatimTextOutput("basicstatspricestext"),
-        h2("Estadísticas de los retornos"),
-        verbatimTextOutput("basicstatsreturnstext")
+        fluidRow(
+          box(width = 12, title = "Estadísticas de los precios",
+            verbatimTextOutput("basicstatspricestext")
+          ),
+          box(width = 12, title = "Estadísticas de los retornos",
+            verbatimTextOutput("basicstatsreturnstext")
+          ),
+          box(width = 12, title = "Cuantiles de los retornos",
+              selectInput(inputId = "quantiletype",
+                          label = "Tipo de cálculo",
+                          choices = c("1"="1", "2"="2", "3"="3",
+                                      "4"="4", "5"="5", "6"="6",
+                                      "7"="7", "8"="8", "9"="9")
+                          )
+          ),
+          box(width = 12, title = "Cuantiles",
+              verbatimTextOutput("returnsquantilestext")
+          )
+        )
       ),
       tabPanel(
         icon = icon("check-circle"), title = "Matriz de Varianza y Covarianza",
