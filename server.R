@@ -9,11 +9,13 @@ ensure_version("shiny", "1.0.0")
 ensure_version("shinydashboard", "0.5.3")
 ensure_version("fPortfolio", "3011.81")
 ensure_version("knitr", "1.15.1")
+ensure_version("timeSeries", "3022.101.2")
 
 library(shiny)
 library(shinydashboard)
 library(fPortfolio)
 library(knitr)
+library(timeSeries)
 
 # By default, the file size limit is 5MB. It can be changed by
 # setting this option. Here we'll lower limit to 1MB.
@@ -44,11 +46,14 @@ shinyServer(function(input, output) {
 
   returns<- function() {
     if (input$returnsType == "arithmetic") {
-      returnsresult<-exp(diff(log(prices()))) - 1
+      #returnsresult<-exp(diff(log(prices()))) - 1
+      returnsresult<-timeSeries::returns(prices(), method="discrete")
     } else {
-      returnsresult<-diff(log(prices()))
+      #returnsresult<-diff(log(prices()))
+      returnsresult<-timeSeries::returns(prices(), method="continuous")
     }
-    returnsresult[-1,]
+    #returnsresult[-1,]
+    returnsresult
   }
 
   symbols<- function() {
