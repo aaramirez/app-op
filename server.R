@@ -10,12 +10,15 @@ ensure_version("shinydashboard", "0.5.3")
 ensure_version("fPortfolio", "3011.81")
 ensure_version("knitr", "1.15.1")
 ensure_version("timeSeries", "3022.101.2")
+ensure_version("pastecs", "1.3-18")
 
 library(shiny)
 library(shinydashboard)
-library(fPortfolio)
-library(knitr)
 library(timeSeries)
+library(knitr)
+library(fPortfolio)
+library(pastecs)
+
 
 # By default, the file size limit is 5MB. It can be changed by
 # setting this option. Here we'll lower limit to 1MB.
@@ -44,21 +47,54 @@ shinyServer(function(input, output) {
     as.timeSeries(data())
   }
 
-  returns<- function() {
+  method<- reactive({
     if (input$returnsType == "arithmetic") {
-      #returnsresult<-exp(diff(log(prices()))) - 1
-      returnsresult<-timeSeries::returns(prices(), method="discrete")
+      "discrete"
     } else {
-      #returnsresult<-diff(log(prices()))
-      returnsresult<-timeSeries::returns(prices(), method="continuous")
+      "continuous"
     }
-    #returnsresult[-1,]
-    returnsresult
+  })
+
+  returns<- function() {
+    #returnsresult<-exp(diff(log(prices()))) - 1
+    ##returnsresult<-diff(log(prices()))
+    timeSeries::returns(prices(), method=method())
   }
 
   symbols<- function() {
     names(prices())
   }
+
+  cumulated<- function() {
+    timeSeries::cumulated(returns(), method=method())
+  }
+
+  drawdowns<- function() {
+    timeSeries::drawdowns(returns())
+  }
+
+  smoothlowess<- reactive({
+    timeSeries::smoothLowess(prices()[, input$symbol])
+  })
+
+  turnpoints<- function() {
+    x<-smoothlowess()[,"lowess"]
+    tp<-suppressWarnings(pastecs::turnpoints(as.ts(x)))
+    recordIDs<- data.frame(tp$peaks, tp$pits)
+    rownames(recordIDs)<- rownames(x)
+    colnames(recordIDs)<- c("peaks", "pits")
+    timeSeries(data=x, charvec=time(x),
+               units = colnames(x),
+               zone = finCenter(x),
+               FinCenter = finCenter(x),
+               recordIDs = recordIDs,
+               title = x@title,
+               documentation = x@documentation
+               )
+  }
+
+
+  # data tab outputs - Begin
 
   output$datatable <- renderTable({
     round(prices(), digits = 6)
@@ -68,25 +104,18 @@ shinyServer(function(input, output) {
     round(returns(), digits = 6)
   })
 
-  output$symbollist<- renderUI({
-    selectInput("symbol", "Seleccione el símbolo:",
-                choices = symbols()
-    )
+  output$cumulatedtable <- renderTable({
+    cumulated()
   })
 
-  output$symbollist2<- renderUI({
-    selectInput("symbol2", "",
-                choices = symbols()
-    )
+  output$drawdowstable <- renderTable({
+    drawdowns()
   })
 
-  output$symbollist3<- renderUI({
-    selectInput("symbol3", "",
-                choices = symbols()
-    )
-  })
+  # data tab outputs - End
 
   ## stats tab outputs - Begin
+
   covData<- reactive({
     covEstimator(returns())
   })
@@ -133,6 +162,12 @@ shinyServer(function(input, output) {
 
   ## individual tab outputs - Begin
 
+  output$symbollist<- renderUI({
+    selectInput("symbol", "Seleccione el símbolo:",
+                choices = symbols()
+    )
+  })
+
   output$meanvalue<- renderValueBox({
     valueBox(
       round(mean(returns()[, input$symbol]), digits = 6), "Media", icon = icon("balance-scale")
@@ -174,9 +209,36 @@ shinyServer(function(input, output) {
     plot(density(returns()[, input$symbol]), main="")
   })
 
+  output$lowessplot <- renderPlot({
+    plot(smoothlowess()[,input$symbol])
+    lines(smoothlowess()[,"lowess"], col="blue")
+  })
+
+  output$turnsplot <- renderPlot({
+    turnsvar<-turnpoints()
+    peaks<-turnsvar[turnsvar@recordIDs[,"peaks"]==TRUE,]
+    pits<-turnsvar[turnsvar@recordIDs[,"pits"]==TRUE,]
+    plot(smoothlowess()[,input$symbol])
+    lines(smoothlowess()[,"lowess"], col="blue", lwd=2)
+    points(peaks, col="green3", pch=24)
+    points(pits, col="red", pch=25)
+  })
+
   ## individual tab outputs - End
 
   ## pairs tab outputs - Begin
+
+  output$symbollist2<- renderUI({
+    selectInput("symbol2", "",
+                choices = symbols()
+    )
+  })
+
+  output$symbollist3<- renderUI({
+    selectInput("symbol3", "",
+                choices = symbols()
+    )
+  })
 
   output$covarvalue<- renderValueBox({
     valueBox(

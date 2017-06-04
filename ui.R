@@ -78,6 +78,14 @@ datatab<-tabItem(
                            choices = list("Aritmético"="arithmetic", "Logarítmico"="log")), width = 12)
         ),
         tableOutput('returntable')
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = "Retorno acumulado",
+        tableOutput('cumulatedtable')
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = "Pérdidas",
+        tableOutput('drawdowstable')
       )
     )
   )
@@ -137,6 +145,14 @@ individualtab<-tabItem(
     ),
     box(width = 6, title = "Kernel",
         plotOutput("returnsdensityplot")
+    )
+  ),
+  fluidRow(
+    box(width = 6, title = "Serie suavizada",
+        plotOutput('lowessplot')
+    ),
+    box(width = 6, title = "Puntos de cambio de dirección",
+      plotOutput('turnsplot')
     )
   )
 )
