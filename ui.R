@@ -25,8 +25,7 @@ menu<-dashboardSidebar(
     menuItem("Estadísticas", tabName = "stats", icon=icon("pie-chart")),
     menuItem("Optimización", tabName = "optimize", icon=icon("area-chart")),
     menuItem("Instrumento", tabName="individual", icon=icon("file-o")),
-    menuItem("Pares", tabName="pairs", icon=icon("files-o")),
-    menuItem("Mercado", tabName = "market", icon=icon("building"))
+    menuItem("Pares", tabName="pairs", icon=icon("files-o"))
   )
 )
 
@@ -94,11 +93,40 @@ datatab<-tabItem(
 statstab<-tabItem(
   tabName = "stats",
   fluidRow(
-    box(width = 12, title = "Medias",
-        verbatimTextOutput("meantable")
-    ),
-    box(width = 12, title = "Matriz de Varianza y Covarianza",
+    tabBox(
+      width = 12, title = "Estadísticas generales",
+      tabPanel(
+        icon = icon("check-circle"), title = "Resumen de precios y retornos",
+        h2("Resumen de precios"),
+        verbatimTextOutput("summarypricestext"),
+        h2("Resumen de retornos"),
+        verbatimTextOutput("summaryreturnstext")
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = "Estadísticas básicas",
+        h2("Estadísticas de los precios"),
+        verbatimTextOutput("basicstatspricestext"),
+        h2("Estadísticas de los retornos"),
+        verbatimTextOutput("basicstatsreturnstext")
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = "Matriz de Varianza y Covarianza",
+        verbatimTextOutput("meantable"),
         verbatimTextOutput("varcovartable")
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = "Períodos de pérdidas",
+        fluidRow(
+          box(width = 12, title = "Seleccione el instrumento que desea estudiar:",
+              uiOutput("symbollist4")
+          )
+        ),
+        fluidRow(
+          box(width = 12, title = "Períodos de pérdida del instrumento",
+              tableOutput("drawdownstable")
+          )
+        )
+      )
     )
   )
 )
@@ -186,15 +214,10 @@ pairstab<-tabItem(
   )
 )
 
-markettab<-tabItem(
-  tabName = "market",
-  h1("Referencias del Mercado")
-)
-
 body<-dashboardBody(
   tabItems(datatab, statstab,
            optimizetab, individualtab,
-           pairstab, markettab)
+           pairstab)
 )
 
 # Define UI

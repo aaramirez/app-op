@@ -120,12 +120,38 @@ shinyServer(function(input, output) {
     covEstimator(returns())
   })
 
+  output$summarypricestext<- renderPrint({
+    summary(prices())
+  })
+
+  output$summaryreturnstext<- renderPrint({
+    summary(returns())
+  })
+
+  output$basicstatspricestext<- renderPrint({
+    fBasics::basicStats(prices())
+  })
+
+  output$basicstatsreturnstext<- renderPrint({
+    fBasics::basicStats(returns())
+  })
+
   output$meantable <- renderPrint({
     covData()$mu
   })
 
   output$varcovartable <- renderPrint({
     covData()$Sigma
+  })
+
+  output$symbollist4<- renderUI({
+    selectInput("symbol4", "",
+                choices = symbols()
+    )
+  })
+
+  output$drawdownstable<- renderTable({
+    drawdownsStats(returns()[,input$symbol4])
   })
 
   ## stats tab outputs - End
