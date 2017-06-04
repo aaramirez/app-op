@@ -161,6 +161,34 @@ statstab<-tabItem(
               tableOutput("drawdownstable")
           )
         )
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = "Valores extremos",
+        fluidRow(
+          box(width = 12, title = "Valores extremos",
+              verbatimTextOutput("outlierstext")
+          )
+        )
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = "Estadística robusta",
+        fluidRow(
+          box(width = 12, title = "",
+              selectInput(inputId = "meancovmethod",
+                          label = "Método de cálculo",
+                          choices = c("cov"="cov", "mve"="mve",
+                                      "mcd"="mcd", "MCD"="MCD",
+                                      "OGK"="OGK", "nnve"="nnve",
+                                      "shrink"="shrink", "bagged"="bagged")
+              )
+          ),
+          box(width = 12, title = "Covarianza robusta",
+              verbatimTextOutput("meancovtext")
+          ),
+          box(width = 12, title = "Covarianzas",
+              plotOutput("covellipsesplot")
+          )
+        )
       )
     )
   )

@@ -164,6 +164,25 @@ shinyServer(function(input, output) {
     drawdownsStats(returns()[,input$symbol4])
   })
 
+  output$outlierstext<- renderPrint({
+    fAssets::assetsOutliers(returns(),
+                            timeSeries::colMeans(returns()),
+                            stats::cov(returns()))
+  })
+
+  amcov<- function() {
+    fAssets::assetsMeanCov(returns()*100, method = input$meancovmethod)
+  }
+
+  output$meancovtext<- renderPrint({
+    amcov()
+  })
+
+  output$covellipsesplot<- renderPlot({
+    fAssets::covEllipsesPlot((list(cov(returns()), amcov()$cov)))
+    title(main = paste0("Sample vs. ", input$meancovmethod," Covariances"))
+  })
+
   ## stats tab outputs - End
 
   ## optimize tab outputs - Begin
