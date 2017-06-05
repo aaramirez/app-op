@@ -206,18 +206,27 @@ shinyServer(function(input, output) {
                             covDataforOutliers()$Sigma)
   })
 
-  amcov<- reactive ({
+  amcov1<- reactive ({
     # TODO: por qué por 100??
-    fAssets::assetsMeanCov(returns()*100, method = input$meancovmethod)
+    fAssets::assetsMeanCov(returns(), method = input$meancovmethod1)
   })
 
-  output$meancovtext<- renderPrint({
-    amcov()
+  amcov2<- reactive ({
+    # TODO: por qué por 100??
+    fAssets::assetsMeanCov(returns(), method = input$meancovmethod2)
+  })
+
+  output$meancovtext1<- renderPrint({
+    amcov1()
+  })
+
+  output$meancovtext2<- renderPrint({
+    amcov2()
   })
 
   output$covellipsesplot<- renderPlot({
-    fAssets::covEllipsesPlot((list(cov(returns()), amcov()$cov)))
-    title(main = paste0("Sample vs. ", input$meancovmethod," Covariances"))
+    fAssets::covEllipsesPlot((list(amcov1()$cov, amcov2()$cov)))
+    title(main = paste0(input$meancovmethod1, " vs. ", input$meancovmethod2," Covariances"))
   })
 
   ## stats tab outputs - End

@@ -178,17 +178,26 @@ statstab<-tabItem(
       tabPanel(
         icon = icon("check-circle"), title = "Estadística robusta",
         fluidRow(
-          box(width = 12, title = "",
-              selectInput(inputId = "meancovmethod",
+          box(width = 6, title = "",
+              selectInput(inputId = "meancovmethod1",
                           label = "Método de cálculo",
                           choices = COVCALCTYPE_CONF
               )
           ),
-          box(width = 12, title = "Covarianza robusta",
-              verbatimTextOutput("meancovtext")
+          box(width = 6, title = "",
+              selectInput(inputId = "meancovmethod2",
+                          label = "Método de cálculo",
+                          choices = COVCALCTYPE_CONF
+              )
           ),
-          box(width = 12, title = "Covarianzas",
+          box(width = 12, title = "Comparación de Covarianzas",
               plotOutput("covellipsesplot")
+          ),
+          box(width = 6, title = "Covarianza robusta 1",
+              verbatimTextOutput("meancovtext1")
+          ),
+          box(width = 6, title = "Covarianza robusta 2",
+              verbatimTextOutput("meancovtext2")
           )
         )
       )
