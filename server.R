@@ -126,6 +126,14 @@ shinyServer(function(input, output) {
     summary(returns())
   })
 
+  output$plotprices<- renderPlot({
+    plot(prices(), main="Precios")
+  })
+
+  output$plotreturns<- renderPlot({
+    plot(returns(), main="Retornos")
+  })
+
   output$basicstatspricestext<- renderPrint({
     fBasics::basicStats(prices())
   })

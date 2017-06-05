@@ -97,7 +97,11 @@ statstab<-tabItem(
         h2("Resumen de precios"),
         verbatimTextOutput("summarypricestext"),
         h2("Resumen de retornos"),
-        verbatimTextOutput("summaryreturnstext")
+        verbatimTextOutput("summaryreturnstext"),
+        h2("Gráfico de precios"),
+        plotOutput("plotprices"),
+        h2("Gráfico de retornos"),
+        plotOutput("plotreturns")
       ),
       tabPanel(
         icon = icon("check-circle"), title = "Estadísticas básicas",
