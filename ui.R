@@ -56,26 +56,26 @@ datatab<-tabItem(
           UPLOADHELP_TEXT2)
     ),
     tabBox(
-      width = 9, title = "Símbolos y Retornos",
+      width = 9, title = SYMBOLSTABTITLE_TEXT,
       tabPanel(
-        icon = icon("check-circle"), title = "Lista de símbolos",
+        icon = icon("check-circle"), title = SYMBOLSLIST_TEXT,
         tableOutput('datatable')
       ),
       tabPanel(
-        icon = icon("check-circle"),title = "Retorno de los datos",
+        icon = icon("check-circle"),title = RETURNSTAB_TEXT,
         fluidRow(
           box(radioButtons(inputId = "returnsType",
-                           label = "Tipo de retorno",
-                           choices = list("Aritmético"="arithmetic", "Logarítmico"="log")), width = 12)
+                           label = RETURNTYPELABEL_TEXT,
+                           choices = RETURNTYPE_CONF), width = 12)
         ),
         tableOutput('returntable')
       ),
       tabPanel(
-        icon = icon("check-circle"), title = "Retorno acumulado",
+        icon = icon("check-circle"), title = CUMRETURNTITLE_TEXT,
         tableOutput('cumulatedtable')
       ),
       tabPanel(
-        icon = icon("check-circle"), title = "Pérdidas",
+        icon = icon("check-circle"), title = DRAWDOWNTITLE_TEXT,
         tableOutput('drawdowstable')
       )
     )
@@ -86,7 +86,7 @@ statstab<-tabItem(
   tabName = "stats",
   fluidRow(
     tabBox(
-      width = 12, title = "Estadísticas generales",
+      width = 12, title = GENERALSTATSTITLE_TEXT,
       tabPanel(
         icon = icon("check-circle"), title = "Resumen de precios y retornos",
         h2("Resumen de precios"),
@@ -106,9 +106,7 @@ statstab<-tabItem(
           box(width = 12, title = "Cuantiles de los retornos",
               selectInput(inputId = "quantiletype",
                           label = "Tipo de cálculo",
-                          choices = c("1"="1", "2"="2", "3"="3",
-                                      "4"="4", "5"="5", "6"="6",
-                                      "7"="7", "8"="8", "9"="9")
+                          choices = QUANTILECALCTYPE_CONF
                           ),
               verbatimTextOutput("returnsquantilestext")
           ),
@@ -117,18 +115,13 @@ statstab<-tabItem(
                 box(width = 6, title = "",
                 sliderInput(inputId = "quantileprob",
                             label = "Cuantil",
-                            min = 0,
-                            max = 1,
-                            value = 0.05,
-                            step = 0.01
+                            min = 0, max = 1, value = 0.05, step = 0.01
                             )
                 ),
                 box(width = 6, title = "",
                 selectInput(inputId = "quantiletype2",
                           label = "Tipo de cálculo",
-                          choices = c("1"="1", "2"="2", "3"="3",
-                                      "4"="4", "5"="5", "6"="6",
-                                      "7"="7", "8"="8", "9"="9")
+                          choices = QUANTILECALCTYPE_CONF
                           )
                 )
               ),
@@ -168,10 +161,7 @@ statstab<-tabItem(
           box(width = 12, title = "",
               selectInput(inputId = "meancovmethod",
                           label = "Método de cálculo",
-                          choices = c("cov"="cov", "mve"="mve",
-                                      "mcd"="mcd", "MCD"="MCD",
-                                      "OGK"="OGK", "nnve"="nnve",
-                                      "shrink"="shrink", "bagged"="bagged")
+                          choices = COVCALCTYPE_CONF
               )
           ),
           box(width = 12, title = "Covarianza robusta",
@@ -265,6 +255,9 @@ pairstab<-tabItem(
   fluidRow(
     box(width = 6, title = "Fuerza relativa",
         plotOutput("rsplot")
+    ),
+    box(width = 6, title = "Retornos",
+        plotOutput("scatterreturnsplot")
     )
   )
 )

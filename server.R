@@ -331,6 +331,11 @@ shinyServer(function(input, output) {
     plot(prices()[, input$symbol2]/prices()[, input$symbol3])
   })
 
+  output$scatterreturnsplot<- renderPlot({
+    plot(as.vector(returns()[, input$symbol2]), as.vector(returns()[, input$symbol3]),
+         xlab=input$symbol2, ylab=input$symbol3, type="p", pch=16)
+  })
+
   ## pairs tab outputs - End
 
 })

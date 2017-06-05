@@ -18,3 +18,15 @@ UPLOADCOMILLAS_CONF<-c('Ninguna'='',
 
 DEMOFILEURL_CONF<-"2tech.csv"
 DEMOFILETEXT_CONF<-"2tech.csv"
+
+
+RETURNTYPE_CONF<-list("Aritmético"="arithmetic", "Logarítmico"="log")
+
+QUANTILECALCTYPE_CONF<-c("1"="1", "2"="2", "3"="3",
+                         "4"="4", "5"="5", "6"="6",
+                         "7"="7", "8"="8", "9"="9")
+
+COVCALCTYPE_CONF<-c("cov"="cov", "mve"="mve",
+                    "mcd"="mcd", "MCD"="MCD",
+                    "OGK"="OGK", "nnve"="nnve",
+                    "shrink"="shrink", "bagged"="bagged")

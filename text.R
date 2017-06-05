@@ -17,3 +17,19 @@ SEPARATOR_TEXT<-'Separador'
 COMILLAS_TEXT<-'Comillas'
 UPLOADHELP_TEXT1<-'Si desea puede trabajar con un archivo de ejemplo .csv, primero descargue el archivo'
 UPLOADHELP_TEXT2<-'y luego utilicelo.'
+
+# data tab
+SYMBOLSTABTITLE_TEXT<-"Símbolos y Retornos"
+SYMBOLSLIST_TEXT<-"Lista de símbolos"
+RETURNSTAB_TEXT<-"Retorno de los datos"
+RETURNTYPELABEL_TEXT<-"Tipo de retorno"
+CUMRETURNTITLE_TEXT<-"Retorno acumulado"
+DRAWDOWNTITLE_TEXT<-"Pérdidas"
+
+# stats tab
+GENERALSTATSTITLE_TEXT<-"Estadísticas generales"
+
+
+
+
+
