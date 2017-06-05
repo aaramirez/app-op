@@ -72,6 +72,11 @@ datatab<-tabItem(
       ),
       tabPanel(
         icon = icon("check-circle"), title = CUMRETURNTITLE_TEXT,
+        fluidRow(
+          box(radioButtons(inputId = "cumreturnsType",
+                           label = RETURNTYPELABEL_TEXT,
+                           choices = RETURNTYPE_CONF), width = 12)
+        ),
         tableOutput('cumulatedtable')
       ),
       tabPanel(

@@ -49,18 +49,10 @@ shinyServer(function(input, output) {
     as.timeSeries(data())
   }
 
-  method<- reactive({
-    if (input$returnsType == "arithmetic") {
-      "discrete"
-    } else {
-      "continuous"
-    }
-  })
-
   returns<- function() {
     #returnsresult<-exp(diff(log(prices()))) - 1
     ##returnsresult<-diff(log(prices()))
-    timeSeries::returns(prices(), method=method())
+    timeSeries::returns(prices(), method=input$returnsType)
   }
 
   symbols<- function() {
@@ -68,7 +60,12 @@ shinyServer(function(input, output) {
   }
 
   cumulated<- function() {
-    timeSeries::cumulated(returns(), method=method())
+    # Note, the function cumulated assumes as
+    # input discrete returns from a price or index series.
+    # see ?cumulated
+    timeSeries::cumulated(
+      timeSeries::returns(prices(), method="discrete"),
+      method=input$cumreturnsType)
   }
 
   drawdowns<- function() {

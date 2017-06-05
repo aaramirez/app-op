@@ -20,7 +20,7 @@ DEMOFILEURL_CONF<-"2tech.csv"
 DEMOFILETEXT_CONF<-"2tech.csv"
 
 
-RETURNTYPE_CONF<-list("Aritmético"="arithmetic", "Logarítmico"="log")
+RETURNTYPE_CONF<-c("Discreto"="discrete", "Continuo"="continuous")
 
 QUANTILECALCTYPE_CONF<-c("1"="1", "2"="2", "3"="3",
                          "4"="4", "5"="5", "6"="6",
