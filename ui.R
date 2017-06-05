@@ -136,8 +136,17 @@ statstab<-tabItem(
       ),
       tabPanel(
         icon = icon("check-circle"), title = "Matriz de Varianza y Covarianza",
-        verbatimTextOutput("meantable"),
-        verbatimTextOutput("varcovartable")
+        fluidRow(
+          box(width = 12, title = "Estimador de la matriz de covarianza",
+              selectInput(inputId = "covtype",
+                          label = "Estimador",
+                          choices = COVESTIMATOR_CONF
+              )
+          ),
+          box(width = 12, title = "Resultado del estimador",
+              verbatimTextOutput("covestimator")
+          )
+        )
       ),
       tabPanel(
         icon = icon("check-circle"), title = "Períodos de pérdidas",
@@ -155,6 +164,12 @@ statstab<-tabItem(
       tabPanel(
         icon = icon("check-circle"), title = "Valores extremos",
         fluidRow(
+          box(width = 12, title = "Estimador de la matriz de covarianza",
+              selectInput(inputId = "covtypeforoutliers",
+                          label = "Estimador",
+                          choices = COVESTIMATOR_CONF
+              )
+          ),
           box(width = 12, title = "Valores extremos",
               verbatimTextOutput("outlierstext")
           )

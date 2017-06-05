@@ -21,10 +21,13 @@ library(knitr)
 library(fPortfolio)
 library(pastecs)
 
-
 # By default, the file size limit is 5MB. It can be changed by
 # setting this option. Here we'll lower limit to 1MB.
 options(shiny.maxRequestSize = 1*1024^2)
+
+# Optiones o configuración que finalizan
+# en _CONF se encuentran en config.R
+source("config.R")
 
 shinyServer(function(input, output) {
   lista<-c()
@@ -115,22 +118,6 @@ shinyServer(function(input, output) {
 
   ## stats tab outputs - Begin
 
-  # You can use many estimators for Cov
-  # covEstimator uses standard covariance estimation,
-  # mveEstimator uses the function "cov.mve" from the MASS package,
-  # mcdEstimator uses the function "cov.mcd" from the MASS package,
-  # lpmEstimator returns lower partial moment estimator,
-  # kendallEstimator returns Kendall's rank estimator,
-  # spearmanEstimator returns Spearman's rankestimator,
-  # covMcdEstimator requires "covMcd" from package robustbase,
-  # covOGKEstimator requires "covOGK" from package robustbase,
-  # nnveEstimator uses builtin from package covRobust,
-  # shrinkEstimator uses builtin from package corpcor.
-  # TODO: use differente estimators
-  covData<- function() {
-    covEstimator(returns())
-  }
-
   output$summarypricestext<- renderPrint({
     summary(prices())
   })
@@ -157,12 +144,36 @@ shinyServer(function(input, output) {
                              type=as.integer(input$quantiletype2))
   })
 
-  output$meantable <- renderPrint({
-    covData()$mu
+  # You can use many estimators for Cov
+  # covEstimator uses standard covariance estimation,
+  # mveEstimator uses the function "cov.mve" from the MASS package,
+  # mcdEstimator uses the function "cov.mcd" from the MASS package,
+  # lpmEstimator returns lower partial moment estimator,
+  # kendallEstimator returns Kendall's rank estimator,
+  # spearmanEstimator returns Spearman's rankestimator,
+  # covMcdEstimator requires "covMcd" from package robustbase,
+  # covOGKEstimator requires "covOGK" from package robustbase,
+  # nnveEstimator uses builtin from package covRobust,
+  # shrinkEstimator uses builtin from package corpcor.
+  # TODO: use differente estimators
+  covData<- reactive ({
+    fun<-switch(input$covtype,
+                "covEstimator"=covEstimator,
+                "covEstimator"=covEstimator,
+                "mveEstimator"=mveEstimator,
+                "mcdEstimator"=mcdEstimator,
+                "lpmEstimator"=lpmEstimator,
+                "kendallEstimator"=kendallEstimator,
+                "spearmanEstimator"=spearmanEstimator,
+                "covMcdEstimator"=covMcdEstimator,
+                "covOGKEstimator"=covOGKEstimator,
+                "nnveEstimator"=nnveEstimator,
+                "shrinkEstimator"=shrinkEstimator)
+    fun(returns())
   })
 
-  output$varcovartable <- renderPrint({
-    covData()$Sigma
+  output$covestimator <- renderPrint({
+    covData()
   })
 
   output$symbollist4<- renderUI({
@@ -173,13 +184,30 @@ shinyServer(function(input, output) {
     drawdownsStats(returns()[,input$symbol4])
   })
 
+  covDataforOutliers<- reactive ({
+    fun<-switch(input$covtypeforoutliers,
+                "covEstimator"=covEstimator,
+                "covEstimator"=covEstimator,
+                "mveEstimator"=mveEstimator,
+                "mcdEstimator"=mcdEstimator,
+                "lpmEstimator"=lpmEstimator,
+                "kendallEstimator"=kendallEstimator,
+                "spearmanEstimator"=spearmanEstimator,
+                "covMcdEstimator"=covMcdEstimator,
+                "covOGKEstimator"=covOGKEstimator,
+                "nnveEstimator"=nnveEstimator,
+                "shrinkEstimator"=shrinkEstimator)
+    fun(returns())
+  })
+
   output$outlierstext<- renderPrint({
     fAssets::assetsOutliers(returns(),
                             timeSeries::colMeans(returns()),
-                            stats::cov(returns()))
+                            covDataforOutliers()$Sigma)
   })
 
   amcov<- reactive ({
+    # TODO: por qué por 100??
     fAssets::assetsMeanCov(returns()*100, method = input$meancovmethod)
   })
 
