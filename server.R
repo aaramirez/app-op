@@ -1,4 +1,6 @@
-
+#
+# server.R for Portfolio Optimization
+#
 # Make sure a package is at least some version (only installs from CRAN)
 ensure_version <- function(pkg, ver = "0.0") {
   if (system.file(package = pkg)  == "" || packageVersion(pkg) < ver)
@@ -24,7 +26,6 @@ library(pastecs)
 # setting this option. Here we'll lower limit to 1MB.
 options(shiny.maxRequestSize = 1*1024^2)
 
-# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   lista<-c()
   data <- reactive({
@@ -38,6 +39,7 @@ shinyServer(function(input, output) {
 
     if (is.null(inFile))
       return(NULL)
+
     read.csv(inFile$datapath, header = input$header,
              sep = input$sep, quote = input$quote)
 
@@ -116,9 +118,9 @@ shinyServer(function(input, output) {
 
   ## stats tab outputs - Begin
 
-  covData<- reactive({
+  covData<- function() {
     covEstimator(returns())
-  })
+  }
 
   output$summarypricestext<- renderPrint({
     summary(prices())
@@ -155,9 +157,7 @@ shinyServer(function(input, output) {
   })
 
   output$symbollist4<- renderUI({
-    selectInput("symbol4", "",
-                choices = symbols()
-    )
+    selectInput("symbol4", "", choices = symbols())
   })
 
   output$drawdownstable<- renderTable({
@@ -284,15 +284,11 @@ shinyServer(function(input, output) {
   ## pairs tab outputs - Begin
 
   output$symbollist2<- renderUI({
-    selectInput("symbol2", "",
-                choices = symbols()
-    )
+    selectInput("symbol2", "", choices = symbols())
   })
 
   output$symbollist3<- renderUI({
-    selectInput("symbol3", "",
-                choices = symbols()
-    )
+    selectInput("symbol3", "", choices = symbols())
   })
 
   output$covarvalue<- renderValueBox({

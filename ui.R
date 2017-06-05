@@ -1,5 +1,6 @@
-
-
+#
+# ui.R for Portfolio Optimization
+#
 # Make sure a package is at least some version (only installs from CRAN)
 ensure_version <- function(pkg, ver = "0.0") {
   if (system.file(package = pkg)  == "" || packageVersion(pkg) < ver)
@@ -277,10 +278,7 @@ body<-dashboardBody(
 # Define UI
 shinyUI(
   dashboardPage(
-    skin = "green",
-    header,
-    menu,
-    body
+    skin = "green", header, menu, body
   )
 )
 
