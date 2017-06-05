@@ -190,7 +190,7 @@ statstab<-tabItem(
                           choices = COVCALCTYPE_CONF
               )
           ),
-          box(width = 12, title = "Comparación de Covarianzas",
+          box(width = 12, title = "Comparación de Covarianzas Robustas",
               plotOutput("covellipsesplot")
           ),
           box(width = 6, title = "Covarianza robusta 1",
