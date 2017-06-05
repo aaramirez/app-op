@@ -268,6 +268,14 @@ individualtab<-tabItem(
     box(width = 6, title = "Pérdidas",
         plotOutput("drawdownsdplot")
     )
+  ),
+  fluidRow(
+    box(width = 6, title = "Boxplot Precios",
+        plotOutput("pricesboxplot")
+    ),
+    box(width = 6, title = "Boxplot Retornos",
+        plotOutput("returnsboxplot")
+    )
   )
 )
 

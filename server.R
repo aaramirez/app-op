@@ -341,6 +341,14 @@ shinyServer(function(input, output) {
     fBasics::drawdownPlot(returns()[, input$symbol])
   })
 
+  output$pricesboxplot<- renderPlot({
+    fBasics::boxPlot(prices()[, input$symbol])
+  })
+
+  output$returnsboxplot<- renderPlot({
+    fBasics::boxPlot(returns()[, input$symbol])
+  })
+
   ## individual tab outputs - End
 
   ## pairs tab outputs - Begin
