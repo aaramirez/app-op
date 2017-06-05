@@ -334,7 +334,11 @@ shinyServer(function(input, output) {
   })
 
   output$cumulatedplot<- renderPlot({
-    fBasics::cumulatedPlot(returns(), main="Acumulado")
+    fBasics::cumulatedPlot(returns()[, input$symbol], main="Acumulado")
+  })
+
+  output$drawdownsdplot<- renderPlot({
+    fBasics::drawdownPlot(returns()[, input$symbol])
   })
 
   ## individual tab outputs - End

@@ -264,6 +264,9 @@ individualtab<-tabItem(
   fluidRow(
     box(width = 6, title = "Acumulado",
         plotOutput("cumulatedplot")
+    ),
+    box(width = 6, title = "Pérdidas",
+        plotOutput("drawdownsdplot")
     )
   )
 )
