@@ -12,56 +12,47 @@ ensure_version("shinydashboard", "0.5.3")
 library(shiny)
 library(shinydashboard)
 
+# Texto que finaliza en _TEXT se encuentra
+# definido en text.R
 source("text.R")
+# Optiones o configuración que finalizan
+# en _CONF se encuentran en config.R
+source("config.R")
 
 header<-dashboardHeader(
-  title = tagList(icon("briefcase"), APPTITLE),
+  title = tagList(icon("briefcase"), APPTITLE_TEXT),
   titleWidth = "300px")
 
 menu<-dashboardSidebar(
   sidebarMenu(
     id = "menuitems",
-    menuItem("Datos", tabName = "data", icon=icon("table"), selected = TRUE),
-    menuItem("Estadísticas", tabName = "stats", icon=icon("pie-chart")),
-    menuItem("Optimización", tabName = "optimize", icon=icon("area-chart")),
-    menuItem("Instrumento", tabName="individual", icon=icon("file-o")),
-    menuItem("Pares", tabName="pairs", icon=icon("files-o"))
+    menuItem(DATAMENUTITLE_TEXT, tabName = "data", icon=icon("table"), selected = TRUE),
+    menuItem(STATSMENUTITLE_TEXT, tabName = "stats", icon=icon("pie-chart")),
+    menuItem(OPTIMIZEMENUTITLE_TEXT, tabName = "optimize", icon=icon("area-chart")),
+    menuItem(INDIVMENUTITLE_TEXT, tabName="individual", icon=icon("file-o")),
+    menuItem(PAIRSMENUTITLE_TEXT, tabName="pairs", icon=icon("files-o"))
   )
 )
 
 datatab<-tabItem(
   tabName = "data",
   fluidRow(
-    box(width = 3, title = "Cargar lista de símbolos",
-        fileInput('file_w_data', 'Seleccione el archivo de símbolos',
-                  accept = c(
-                    'text/csv',
-                    'text/comma-separated-values',
-                    'text/tab-separated-values',
-                    'text/plain',
-                    '.csv',
-                    '.tsv'
-                  )
+    box(width = 3, title = UPLOADDATA_TEXT,
+        fileInput('file_w_data', SELECTFILE_TEXT,
+                  accept = UPLOADFILETYPE_CONF
         ),
         tags$hr(),
-        checkboxInput('header', 'Con Encabezado', TRUE),
-        radioButtons('sep', 'Separador',
-                     c('Coma'=',',
-                       'Punto y coma'=';',
-                       'Tab'='\t'),
+        checkboxInput('header', WITHHEADER_TEXT, TRUE),
+        radioButtons('sep', SEPARATOR_TEXT,
+                     UPLOADFILESEP_CONF,
                      ','),
-        radioButtons('quote', 'Comillas',
-                     c('Ninguna'='',
-                       'Comilla doble'='"',
-                       'Comilla simple'="'"),
+        radioButtons('quote', COMILLAS_TEXT,
+                     UPLOADCOMILLAS_CONF,
                      ''),
         tags$hr(),
-        #TODO: Colocar el archivo de prueba en la nube y arreglar el URL
-        p('Si desea puede trabajar con un archivo de ejemplo .csv,',
-          'primero descargue el archivo',
-          a(href = 'smallcap.csv', 'smallcap.csv'),
-          'y luego utilicelo.'
-        )
+        p(UPLOADHELP_TEXT1,
+          a(href = DEMOFILEURL_CONF, DEMOFILETEXT_CONF),
+          UPLOADHELP_TEXT2)
     ),
     tabBox(
       width = 9, title = "Símbolos y Retornos",
