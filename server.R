@@ -170,9 +170,9 @@ shinyServer(function(input, output) {
                             stats::cov(returns()))
   })
 
-  amcov<- function() {
+  amcov<- reactive ({
     fAssets::assetsMeanCov(returns()*100, method = input$meancovmethod)
-  }
+  })
 
   output$meancovtext<- renderPrint({
     amcov()
