@@ -333,6 +333,10 @@ shinyServer(function(input, output) {
     points(pits, col="red", pch=25)
   })
 
+  output$cumulatedplot<- renderPlot({
+    fBasics::cumulatedPlot(returns(), main="Acumulado")
+  })
+
   ## individual tab outputs - End
 
   ## pairs tab outputs - Begin

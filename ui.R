@@ -260,6 +260,11 @@ individualtab<-tabItem(
     box(width = 6, title = "Puntos de cambio de dirección",
       plotOutput('turnsplot')
     )
+  ),
+  fluidRow(
+    box(width = 6, title = "Acumulado",
+        plotOutput("cumulatedplot")
+    )
   )
 )
 
