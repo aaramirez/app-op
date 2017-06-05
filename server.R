@@ -115,6 +115,18 @@ shinyServer(function(input, output) {
 
   ## stats tab outputs - Begin
 
+  # You can use many estimators for Cov
+  # covEstimator uses standard covariance estimation,
+  # mveEstimator uses the function "cov.mve" from the MASS package,
+  # mcdEstimator uses the function "cov.mcd" from the MASS package,
+  # lpmEstimator returns lower partial moment estimator,
+  # kendallEstimator returns Kendall's rank estimator,
+  # spearmanEstimator returns Spearman's rankestimator,
+  # covMcdEstimator requires "covMcd" from package robustbase,
+  # covOGKEstimator requires "covOGK" from package robustbase,
+  # nnveEstimator uses builtin from package covRobust,
+  # shrinkEstimator uses builtin from package corpcor.
+  # TODO: use differente estimators
   covData<- function() {
     covEstimator(returns())
   }
