@@ -7,7 +7,7 @@ ensure_version <- function(pkg, ver = "0.0") {
     install.packages(pkg)
 }
 
-ensure_version("shiny", "1.0.0")
+ensure_version("shiny", "1.0.3")
 ensure_version("shinydashboard", "0.5.3")
 
 library(shiny)
@@ -249,7 +249,7 @@ individualtab<-tabItem(
     box(width = 6, title = "Histograma de retornos",
         plotOutput("returnshistplot")
     ),
-    box(width = 6, title = "Kernel",
+    box(width = 6, title = "Densidad",
         plotOutput("returnsdensityplot")
     )
   ),

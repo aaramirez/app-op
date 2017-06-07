@@ -7,7 +7,7 @@ ensure_version <- function(pkg, ver = "0.0") {
     install.packages(pkg)
 }
 
-ensure_version("shiny", "1.0.0")
+ensure_version("shiny", "1.0.3")
 ensure_version("shinydashboard", "0.5.3")
 ensure_version("fPortfolio", "3011.81")
 ensure_version("knitr", "1.15.1")
@@ -307,7 +307,7 @@ shinyServer(function(input, output) {
 
   output$returnshistplot<- renderPlot({
     rdata<-returns()[, input$symbol]
-    h<-hist(rdata, freq = FALSE, main = "", xlab = "returns")
+    h<-histPlot(rdata, title = FALSE)
     #xfit<-seq(min(rdata),max(rdata),length=100)
     #yfit<-dnorm(xfit,mean=mean(rdata),sd=sd(rdata))
     #yfit <- yfit*diff(h$mids[1:2])*length(rdata)
@@ -315,7 +315,7 @@ shinyServer(function(input, output) {
   })
 
   output$returnsdensityplot<- renderPlot({
-    plot(density(returns()[, input$symbol]), main="")
+    densityPlot(returns()[, input$symbol], title=FALSE)
   })
 
   output$lowessplot <- renderPlot({
@@ -342,11 +342,11 @@ shinyServer(function(input, output) {
   })
 
   output$pricesboxplot<- renderPlot({
-    fBasics::boxPlot(prices()[, input$symbol])
+    fBasics::boxPlot(prices()[, input$symbol], title = FALSE)
   })
 
   output$returnsboxplot<- renderPlot({
-    fBasics::boxPlot(returns()[, input$symbol])
+    fBasics::boxPlot(returns()[, input$symbol], title = FALSE)
   })
 
   ## individual tab outputs - End
