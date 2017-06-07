@@ -21,8 +21,7 @@ source("text.R")
 source("config.R")
 
 header<-dashboardHeader(
-  title = tags$img(src="img/vision.png", width=100),
-  titleWidth = "300px")
+  title = tags$img(src="img/vision.png", width=100))
 
 menu<-dashboardSidebar(
   sidebarMenu(
