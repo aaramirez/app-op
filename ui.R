@@ -21,7 +21,7 @@ source("text.R")
 source("config.R")
 
 header<-dashboardHeader(
-  title = tagList(icon("briefcase"), APPTITLE_TEXT),
+  title = tags$img(src="img/vision.png", width=100),
   titleWidth = "300px")
 
 menu<-dashboardSidebar(
