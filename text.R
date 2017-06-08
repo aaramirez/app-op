@@ -64,6 +64,49 @@ COMPROBUSTCOVAR_TEXT<-"Comparación de Medidas de Covarianzas Robustas"
 ROBUSTCOVAR1_TEXT<-"Covarianza robusta 1"
 ROBUSTCOVAR2_TEXT<-"Covarianza robusta 2"
 
+# optimize tab
+
+EFFICIENTFRONTIER_TEXT<-"Frontera eficiente"
+WEIGHTSCHART_TEXT<-"Gráfico de pesos"
+MINVARPORTFOLIO_TEXT<-"Portafolio de Varianza Mínima"
+
+
+# individual tab
+
+INSTRDATATITLE_TEXT<-"Datos de los instrumentos"
+PRICELABEL_TEXT<-"Precio"
+RETLABEL_TEXT<-"Retornos"
+RETHIST_TEXT<-"Histograma de retornos"
+DENSITYCHART_TEXT<-"Densidad"
+SMOOTHCHART_TEXT<-"Serie suavizada"
+TURNS_TEXT<-"Puntos de cambio de dirección"
+CUMULATED_TEXT<-"Acumulado"
+DRAWD_TEXT<-"Pérdidas"
+PRICEBOXPLOT_TEXT<-"Boxplot Precios"
+RETBOXPLOT_TEXT<-"Boxplot Retornos"
+
+# pairs tab
+
+SELECTINSTR1_TEXT<-"Escoga el primer instrumento"
+SELECTINSTR2_TEXT<-"Escoga el segundo instrumento"
+RELATIVESTRENGTH_TEXT<-"Fuerza relativa"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

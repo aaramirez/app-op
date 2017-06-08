@@ -210,13 +210,13 @@ statstab<-tabItem(
 optimizetab<-tabItem(
   tabName = "optimize",
   fluidRow(
-    box(width = 12, title = "Frontera eficiente",
+    box(width = 12, title = EFFICIENTFRONTIER_TEXT,
         plotOutput("efplot")
     ),
-    box(width = 12, title = "Gráfico de pesos",
+    box(width = 12, title = WEIGHTSCHART_TEXT,
         plotOutput("wplot")
     ),
-    box(width = 12, title = "Portafolio de Varianza Mínima",
+    box(width = 12, title = MINVARPORTFOLIO_TEXT,
         sliderInput("mvmu", label="mu", min=0, max = 3, value = 0.05, step = 0.01),
         verbatimTextOutput("vmtext")
     )
@@ -226,7 +226,7 @@ optimizetab<-tabItem(
 individualtab<-tabItem(
   tabName = "individual",
   fluidRow(
-    box(width = 12, title = "Datos de los instrumentos",
+    box(width = 12, title = INSTRDATATITLE_TEXT,
         uiOutput("symbollist")
     )
   ),
@@ -236,42 +236,42 @@ individualtab<-tabItem(
     valueBoxOutput("stddevvalue")
   ),
   fluidRow(
-    box(width = 6, title = "Precio",
+    box(width = 6, title = PRICELABEL_TEXT,
         plotOutput("priceplot")
     ),
-    box(width = 6, title = "Retornos",
+    box(width = 6, title = RETLABEL_TEXT,
         plotOutput("returnplot")
     )
   ),
   fluidRow(
-    box(width = 6, title = "Histograma de retornos",
+    box(width = 6, title = RETHIST_TEXT,
         plotOutput("returnshistplot")
     ),
-    box(width = 6, title = "Densidad",
+    box(width = 6, title = DENSITYCHART_TEXT,
         plotOutput("returnsdensityplot")
     )
   ),
   fluidRow(
-    box(width = 6, title = "Serie suavizada",
+    box(width = 6, title = SMOOTHCHART_TEXT,
         plotOutput('lowessplot')
     ),
-    box(width = 6, title = "Puntos de cambio de dirección",
+    box(width = 6, title = TURNS_TEXT,
       plotOutput('turnsplot')
     )
   ),
   fluidRow(
-    box(width = 6, title = "Acumulado",
+    box(width = 6, title = CUMULATED_TEXT,
         plotOutput("cumulatedplot")
     ),
-    box(width = 6, title = "Pérdidas",
+    box(width = 6, title = DRAWD_TEXT,
         plotOutput("drawdownsdplot")
     )
   ),
   fluidRow(
-    box(width = 6, title = "Boxplot Precios",
+    box(width = 6, title = PRICEBOXPLOT_TEXT,
         plotOutput("pricesboxplot")
     ),
-    box(width = 6, title = "Boxplot Retornos",
+    box(width = 6, title = RETBOXPLOT_TEXT,
         plotOutput("returnsboxplot")
     )
   )
@@ -280,10 +280,10 @@ individualtab<-tabItem(
 pairstab<-tabItem(
   tabName = "pairs",
   fluidRow(
-    box(width = 6, title = "Escoga el primer instrumento",
+    box(width = 6, title = SELECTINSTR1_TEXT,
         uiOutput("symbollist2")
     ),
-    box(width = 6, title = "Escoga el segundo instrumento",
+    box(width = 6, title = SELECTINSTR2_TEXT,
         uiOutput("symbollist3")
     )
   ),
@@ -292,18 +292,18 @@ pairstab<-tabItem(
       valueBoxOutput("correlvalue", width = 6)
   ),
   fluidRow(
-    box(width = 6, title = "Precios",
+    box(width = 6, title = PRICELABEL_TEXT,
         plotOutput("pricesplot")
     ),
-    box(width = 6, title = "Retornos",
+    box(width = 6, title = RETLABEL_TEXT,
         plotOutput("returnsplot")
     )
   ),
   fluidRow(
-    box(width = 6, title = "Fuerza relativa",
+    box(width = 6, title = RELATIVESTRENGTH_TEXT,
         plotOutput("rsplot")
     ),
-    box(width = 6, title = "Retornos",
+    box(width = 6, title = RETLABEL_TEXT,
         plotOutput("scatterreturnsplot")
     )
   )
