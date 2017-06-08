@@ -91,33 +91,33 @@ statstab<-tabItem(
     tabBox(
       width = 12, title = GENERALSTATSTITLE_TEXT,
       tabPanel(
-        icon = icon("check-circle"), title = "Resumen de precios y retornos",
-        h2("Resumen de precios"),
+        icon = icon("check-circle"), title = PRICERETSUMMARYTABTITLE_TEXT,
+        h2(SUMMARYPRICEHEADER_TEXT),
         verbatimTextOutput("summarypricestext"),
-        h2("Resumen de retornos"),
+        h2(SUMMARYRETHEADER_TEXT),
         verbatimTextOutput("summaryreturnstext"),
-        h2("Gráfico de precios"),
+        h2(SUMMARYPRICECHARTHEAD_TEXT),
         plotOutput("plotprices"),
-        h2("Gráfico de retornos"),
+        h2(SUMMARYRETCHARTHEAD_TEXT),
         plotOutput("plotreturns")
       ),
       tabPanel(
-        icon = icon("check-circle"), title = "Estadísticas básicas",
+        icon = icon("check-circle"), title = BASICSTATSTABTITLE_TEXT,
         fluidRow(
-          box(width = 12, title = "Estadísticas de los precios",
+          box(width = 12, title = BASICPRICESTATS_TEXT,
             verbatimTextOutput("basicstatspricestext")
           ),
-          box(width = 12, title = "Estadísticas de los retornos",
+          box(width = 12, title = BASICRETSTATS_TEXT,
             verbatimTextOutput("basicstatsreturnstext")
           ),
-          box(width = 12, title = "Cuantiles de los retornos",
+          box(width = 12, title = RETQUANTILETITLE_TEXT,
               selectInput(inputId = "quantiletype",
-                          label = "Tipo de cálculo",
+                          label = CALCTYPE_TEXT,
                           choices = QUANTILECALCTYPE_CONF
                           ),
               verbatimTextOutput("returnsquantilestext")
           ),
-          box(width = 12, title = "Cuantiles de los retornos de cada instrumento",
+          box(width = 12, title = INSTRRETQUANTILE_TEXT,
               fluidRow(
                 box(width = 6, title = "",
                 sliderInput(inputId = "quantileprob",
@@ -137,68 +137,68 @@ statstab<-tabItem(
         )
       ),
       tabPanel(
-        icon = icon("check-circle"), title = "Matriz de Varianza y Covarianza",
+        icon = icon("check-circle"), title = VARCOVARTABTITLE_TEXT,
         fluidRow(
-          box(width = 12, title = "Estimador de la matriz de covarianza",
+          box(width = 12, title = COVARESTTABTITLE_TEXT,
               selectInput(inputId = "covtype",
-                          label = "Estimador",
+                          label = ESTLABEL_TEXT,
                           choices = COVESTIMATOR_CONF
               )
           ),
-          box(width = 12, title = "Resultado del estimador",
+          box(width = 12, title = ESTRESULT_TEXT,
               verbatimTextOutput("covestimator")
           )
         )
       ),
       tabPanel(
-        icon = icon("check-circle"), title = "Períodos de pérdidas",
+        icon = icon("check-circle"), title = DRAWDTABTITLE_TEXT,
         fluidRow(
-          box(width = 12, title = "Seleccione el instrumento que desea estudiar:",
+          box(width = 12, title = INSTRSEL_TEXT,
               uiOutput("symbollist4")
           )
         ),
         fluidRow(
-          box(width = 12, title = "Períodos de pérdida del instrumento",
+          box(width = 12, title = DRAWDPERIODS_TEXT,
               tableOutput("drawdownstable")
           )
         )
       ),
       tabPanel(
-        icon = icon("check-circle"), title = "Valores extremos",
+        icon = icon("check-circle"), title = OUTLIERTABTITLE_TEXT,
         fluidRow(
-          box(width = 12, title = "Estimador de la matriz de covarianza",
+          box(width = 12, title = COVARESTTABTITLE_TEXT,
               selectInput(inputId = "covtypeforoutliers",
-                          label = "Estimador",
+                          label = ESTLABEL_TEXT,
                           choices = COVESTIMATOR_CONF
               )
           ),
-          box(width = 12, title = "Valores extremos",
+          box(width = 12, title = OUTLIERVALUES_TEXT,
               verbatimTextOutput("outlierstext")
           )
         )
       ),
       tabPanel(
-        icon = icon("check-circle"), title = "Estadística robusta",
+        icon = icon("check-circle"), title = ROBUSTTABTITLE_TEXT,
         fluidRow(
           box(width = 6, title = "",
               selectInput(inputId = "meancovmethod1",
-                          label = "Método de cálculo",
+                          label = CALCMETHODLABEL_TEXT,
                           choices = COVCALCTYPE_CONF
               )
           ),
           box(width = 6, title = "",
               selectInput(inputId = "meancovmethod2",
-                          label = "Método de cálculo",
+                          label = CALCMETHODLABEL_TEXT,
                           choices = COVCALCTYPE_CONF
               )
           ),
-          box(width = 12, title = "Comparación de Medidas de Covarianzas Robustas",
+          box(width = 12, title = COMPROBUSTCOVAR_TEXT,
               plotOutput("covellipsesplot")
           ),
-          box(width = 6, title = "Covarianza robusta 1",
+          box(width = 6, title = ROBUSTCOVAR1_TEXT,
               verbatimTextOutput("meancovtext1")
           ),
-          box(width = 6, title = "Covarianza robusta 2",
+          box(width = 6, title = ROBUSTCOVAR2_TEXT,
               verbatimTextOutput("meancovtext2")
           )
         )

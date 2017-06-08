@@ -52,24 +52,24 @@ shinyServer(function(input, output) {
     as.timeSeries(data())
   }
 
-  returns<- function() {
+  returns<- reactive({
     #returnsresult<-exp(diff(log(prices()))) - 1
     ##returnsresult<-diff(log(prices()))
     timeSeries::returns(prices(), method=input$returnsType)
-  }
+  })
 
   symbols<- function() {
     names(prices())
   }
 
-  cumulated<- function() {
+  cumulated<- reactive({
     # Note, the function cumulated assumes as
     # input discrete returns from a price or index series.
     # see ?cumulated
     timeSeries::cumulated(
       timeSeries::returns(prices(), method="discrete"),
       method=input$cumreturnsType)
-  }
+  })
 
   drawdowns<- function() {
     timeSeries::drawdowns(returns())
@@ -279,20 +279,23 @@ shinyServer(function(input, output) {
 
   output$meanvalue<- renderValueBox({
     valueBox(
-      round(mean(returns()[, input$symbol]), digits = 6), "Media", icon = icon("balance-scale")
+      round(mean(returns()[, input$symbol]), digits = 6),
+      "Media", icon = icon("balance-scale")
     )
   })
 
   output$varvalue<- renderValueBox({
     valueBox(
-      round(stdev(returns()[, input$symbol])^2, digits = 6), "Varianza", icon = icon("line-chart"),
+      round(stdev(returns()[, input$symbol])^2, digits = 6),
+      "Varianza", icon = icon("line-chart"),
       color = "purple"
     )
   })
 
   output$stddevvalue<- renderValueBox({
     valueBox(
-      round(stdev(returns()[, input$symbol]), digits = 6), "Desviación estandar", icon = icon("arrows-h"),
+      round(stdev(returns()[, input$symbol]), digits = 6),
+      "Desviación estandar", icon = icon("arrows-h"),
       color = "yellow"
     )
   })
@@ -363,7 +366,7 @@ shinyServer(function(input, output) {
 
   output$covarvalue<- renderValueBox({
     valueBox(
-      round(cov(returns()[, input$symbol2],returns()[, input$symbol3]), digits = 6),
+      round(cov(returns()[, input$symbol2], returns()[, input$symbol3]), digits = 6),
       "Covarianza", icon = icon("line-chart"),
       color = "purple"
     )
@@ -371,7 +374,7 @@ shinyServer(function(input, output) {
 
   output$correlvalue<- renderValueBox({
     valueBox(
-      round(cor(returns()[, input$symbol2],returns()[, input$symbol3]), digits = 6),
+      round(cor(returns()[, input$symbol2], returns()[, input$symbol3]), digits = 6),
       "Correlación", icon = icon("arrows-h"),
       color = "yellow"
     )
