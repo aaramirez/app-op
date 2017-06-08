@@ -25,6 +25,9 @@ library(pastecs)
 # setting this option. Here we'll lower limit to 1MB.
 options(shiny.maxRequestSize = 1*1024^2)
 
+# Texto que finaliza en _TEXT se encuentra
+# definido en text.R
+source("text.R")
 # Optiones o configuración que finalizan
 # en _CONF se encuentran en config.R
 source("config.R")
@@ -127,11 +130,11 @@ shinyServer(function(input, output) {
   })
 
   output$plotprices<- renderPlot({
-    plot(prices(), main="Precios")
+    plot(prices(), main=PRICELABEL_TEXT)
   })
 
   output$plotreturns<- renderPlot({
-    plot(returns(), main="Retornos")
+    plot(returns(), main=PRICELABEL_TEXT)
   })
 
   output$basicstatspricestext<- renderPrint({
@@ -272,7 +275,7 @@ shinyServer(function(input, output) {
   ## individual tab outputs - Begin
 
   output$symbollist<- renderUI({
-    selectInput("symbol", "Seleccione el símbolo:",
+    selectInput("symbol", INSTRSEL_TEXT,
                 choices = symbols()
     )
   })
@@ -280,14 +283,14 @@ shinyServer(function(input, output) {
   output$meanvalue<- renderValueBox({
     valueBox(
       round(mean(returns()[, input$symbol]), digits = 6),
-      "Media", icon = icon("balance-scale")
+      MEAN_TEXT, icon = icon("balance-scale")
     )
   })
 
   output$varvalue<- renderValueBox({
     valueBox(
       round(stdev(returns()[, input$symbol])^2, digits = 6),
-      "Varianza", icon = icon("line-chart"),
+      VAR_TEXT, icon = icon("line-chart"),
       color = "purple"
     )
   })
@@ -295,7 +298,7 @@ shinyServer(function(input, output) {
   output$stddevvalue<- renderValueBox({
     valueBox(
       round(stdev(returns()[, input$symbol]), digits = 6),
-      "Desviación estandar", icon = icon("arrows-h"),
+      STDDEV_TEXT, icon = icon("arrows-h"),
       color = "yellow"
     )
   })
@@ -337,7 +340,7 @@ shinyServer(function(input, output) {
   })
 
   output$cumulatedplot<- renderPlot({
-    fBasics::cumulatedPlot(returns()[, input$symbol], main="Acumulado")
+    fBasics::cumulatedPlot(returns()[, input$symbol], main=CUMULATED_TEXT)
   })
 
   output$drawdownsdplot<- renderPlot({
@@ -367,7 +370,7 @@ shinyServer(function(input, output) {
   output$covarvalue<- renderValueBox({
     valueBox(
       round(cov(returns()[, input$symbol2], returns()[, input$symbol3]), digits = 6),
-      "Covarianza", icon = icon("line-chart"),
+      COVAR_TEXT, icon = icon("line-chart"),
       color = "purple"
     )
   })
@@ -375,7 +378,7 @@ shinyServer(function(input, output) {
   output$correlvalue<- renderValueBox({
     valueBox(
       round(cor(returns()[, input$symbol2], returns()[, input$symbol3]), digits = 6),
-      "Correlación", icon = icon("arrows-h"),
+      COR_TEXT, icon = icon("arrows-h"),
       color = "yellow"
     )
   })

@@ -74,7 +74,7 @@ MINVARPORTFOLIO_TEXT<-"Portafolio de Varianza Mínima"
 # individual tab
 
 INSTRDATATITLE_TEXT<-"Datos de los instrumentos"
-PRICELABEL_TEXT<-"Precio"
+PRICELABEL_TEXT<-"Precios"
 RETLABEL_TEXT<-"Retornos"
 RETHIST_TEXT<-"Histograma de retornos"
 DENSITYCHART_TEXT<-"Densidad"
@@ -92,10 +92,14 @@ SELECTINSTR2_TEXT<-"Escoga el segundo instrumento"
 RELATIVESTRENGTH_TEXT<-"Fuerza relativa"
 
 
+# server.R
+#
 
-
-
-
+MEAN_TEXT<-"Media"
+VAR_TEXT<-"Varianza"
+STDDEV_TEXT<-"Desviación estandar"
+COVAR_TEXT<-"Covarianza"
+COR_TEXT<-"Correlación"
 
 
 
