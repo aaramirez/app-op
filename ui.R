@@ -26,6 +26,7 @@ header<-dashboardHeader(
 menu<-dashboardSidebar(
   sidebarMenu(
     id = "menuitems",
+    h4(APPTITLE_TEXT, style="text-align:center;"),
     menuItem(DATAMENUTITLE_TEXT, tabName = "data", icon=icon("table"), selected = TRUE),
     menuItem(STATSMENUTITLE_TEXT, tabName = "stats", icon=icon("pie-chart")),
     menuItem(OPTIMIZEMENUTITLE_TEXT, tabName = "optimize", icon=icon("area-chart")),
