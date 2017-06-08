@@ -1,4 +1,5 @@
-library(shiny)
+# text.R
+#
 # Text and strings for the program
 APPTITLE_TEXT<-"Optimización de Portafolios"
 
