@@ -137,6 +137,48 @@ shinyServer(function(input, output) {
     plot(returns(), main=PRICELABEL_TEXT)
   })
 
+  output$plotreturnsvisual<- renderPlot({
+    fAssets::assetsBasicStatsPlot(returns(), title="", description = "")
+  })
+
+  output$plotreturnsmomentsvisual<- renderPlot({
+    fAssets::assetsMomentsPlot(returns(), title="", description = "")
+  })
+
+  output$plotreturnboxstatsvisual<- renderPlot({
+    fAssets::assetsBoxStatsPlot(returns(), title="", description = "")
+  })
+
+  histPanel<-function(x, ...) {
+    usr<- par("usr")
+    on.exit(par(usr))
+    par(usr=c(usr[1:2], 0, 1.5))
+    h<-hist(x, plot=FALSE)
+    breaks<-h$breaks
+    nB<-length(breaks)
+    y<-h$counts
+    y<- y/max(y)
+    rect(breaks[-nB], 0, breaks[-1], y, ...)
+  }
+
+  output$pairsplot<- renderPlot({
+    fAssets::assetsPairsPlot(returns(), diag.panel=histPanel,
+                             pch=19, cex=0.5, col="royalblue4",
+                             tick=0, col.axis="white")
+  })
+
+  output$corgramplot<- renderPlot({
+    fAssets::assetsCorgramPlot(returns(), method="shade", pch=19, cex=0.5)
+  })
+
+  output$cortestplot<- renderPlot({
+    fAssets::assetsCorTestPlot(returns(), cex=1)
+  })
+
+  output$corimageplot<- renderPlot({
+    fAssets::assetsCorImagePlot(returns(), cex=1)
+  })
+
   output$basicstatspricestext<- renderPrint({
     fBasics::basicStats(prices())
   })
@@ -440,6 +482,11 @@ shinyServer(function(input, output) {
   output$scatterreturnsplot<- renderPlot({
     plot(as.vector(returns()[, input$symbol2]), as.vector(returns()[, input$symbol3]),
          xlab=input$symbol2, ylab=input$symbol3, type="p", pch=16)
+  })
+
+  output$hexbinplot<- renderPlot({
+    hexHist<-hexBinning(returns()[,c(input$symbol2,input$symbol3)], bin=20)
+    plot(hexHist, xlab=input$symbol2, ylab=input$symbol3, col=rev(greyPalette(20)))
   })
 
   ## pairs tab outputs - End

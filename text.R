@@ -35,6 +35,13 @@ SUMMARYRETHEADER_TEXT<-"Resumen de retornos"
 SUMMARYPRICECHARTHEAD_TEXT<-"Gráfico de precios"
 SUMMARYRETCHARTHEAD_TEXT<-"Gráfico de retornos"
 
+SUMMARYRETCHARTVIS_TEXT<-"Estadísticas básicas en gráficos comparativos"
+RETMOMENTSCHARTVIS_TEXT<-"Gráfico comparativo de Momentos"
+RETBOXSTATSCHARTVIS_TEXT<-"Gráfico comparativo de BoxPlots"
+PAIRSPLOT_TEXT<-"Gráfico de pares de instrumentos"
+CORGRAMPLOT_TEXT<-"Correlogramas"
+CORTESTPLOT_TEXT<-"Gráficos y pruebas de correlación"
+CORIMAGEPLOT_TEXT<-"Gráficos de correlación"
 BASICSTATSTABTITLE_TEXT<-"Estadísticas básicas"
 BASICPRICESTATS_TEXT<-"Estadísticas de los precios"
 BASICRETSTATS_TEXT<-"Estadísticas de los retornos"
@@ -104,7 +111,7 @@ RETBOXPLOT_TEXT<-"Boxplot Retornos"
 SELECTINSTR1_TEXT<-"Escoga el primer instrumento"
 SELECTINSTR2_TEXT<-"Escoga el segundo instrumento"
 RELATIVESTRENGTH_TEXT<-"Fuerza relativa"
-
+HEXBINPLOT_TEXT<-"Histograma bivariado"
 
 # server.R
 #
