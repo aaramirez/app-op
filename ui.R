@@ -105,26 +105,28 @@ statstab<-tabItem(
       tabPanel(
         icon = icon("check-circle"), title = BASICSTATSTABTITLE_TEXT,
         fluidRow(
-          box(width = 12, title = SUMMARYRETCHARTVIS_TEXT,
+          tabsetPanel(
+            tabPanel(SUMMARYRETCHARTVIS_TEXT,
               plotOutput("plotreturnsvisual")
-          ),
-          box(width = 12, title = RETMOMENTSCHARTVIS_TEXT,
+            ),
+            tabPanel(RETMOMENTSCHARTVIS_TEXT,
               plotOutput("plotreturnsmomentsvisual")
-          ),
-          box(width = 12, title = RETBOXSTATSCHARTVIS_TEXT,
+            ),
+            tabPanel(RETBOXSTATSCHARTVIS_TEXT,
               plotOutput("plotreturnboxstatsvisual")
-          ),
-          box(width = 12, title = PAIRSPLOT_TEXT,
+            ),
+            tabPanel(PAIRSPLOT_TEXT,
               plotOutput("pairsplot")
-          ),
-          box(width = 12, title = CORGRAMPLOT_TEXT,
+            ),
+            tabPanel(CORGRAMPLOT_TEXT,
               plotOutput("corgramplot")
-          ),
-          box(width = 12, title = CORTESTPLOT_TEXT,
+            ),
+            tabPanel(CORTESTPLOT_TEXT,
               plotOutput("cortestplot")
-          ),
-          box(width = 12, title = CORIMAGEPLOT_TEXT,
+            ),
+            tabPanel(CORIMAGEPLOT_TEXT,
               plotOutput("corimageplot")
+            )
           ),
           box(width = 12, title = BASICPRICESTATS_TEXT,
             verbatimTextOutput("basicstatspricestext")
