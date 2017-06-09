@@ -13,6 +13,7 @@ ensure_version("fPortfolio", "3011.81")
 ensure_version("knitr", "1.15.1")
 ensure_version("timeSeries", "3022.101.2")
 ensure_version("pastecs", "1.3-18")
+ensure_version("fMultivar", "3011.78")
 
 library(shiny)
 library(shinydashboard)
@@ -20,6 +21,7 @@ library(timeSeries)
 library(knitr)
 library(fPortfolio)
 library(pastecs)
+library(fMultivar)
 
 # By default, the file size limit is 5MB. It can be changed by
 # setting this option. Here we'll lower limit to 1MB.
