@@ -242,6 +242,36 @@ shinyServer(function(input, output) {
 
   ## stats tab outputs - End
 
+  ## group tab outputs - Begin
+
+  ahclust<- function() {
+    fAssets::assetsSelect(returns(), method="hclust")
+  }
+
+  output$hclustplot<- renderPlot({
+    plot(ahclust())
+  })
+
+  output$hclusttext<- renderPrint({
+    ahclust()
+  })
+
+  akmeans<- function() {
+    fAssets::assetsSelect(returns(), method="kmeans",
+                          control=c(centers=2, algorithm="Hartigan-Wong"))
+  }
+
+  output$kmeanstext<- renderPrint({
+    sort(akmeans()$cluster)
+  })
+
+  output$coreigenplot<- renderPlot({
+    fAssets::assetsCorEigenPlot(returns(), method="kendall")
+  })
+
+
+  ## group tab outputs - End
+
   ## optimize tab outputs - Begin
 
   frontierCalc <- reactive({

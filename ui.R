@@ -29,6 +29,7 @@ menu<-dashboardSidebar(
     h4(APPTITLE_TEXT, style="text-align:center;"),
     menuItem(DATAMENUTITLE_TEXT, tabName = "data", icon=icon("table"), selected = TRUE),
     menuItem(STATSMENUTITLE_TEXT, tabName = "stats", icon=icon("pie-chart")),
+    menuItem(CLUSTERMENUTITLE_TEXT, tabName="group", icon=icon("object-group")),
     menuItem(OPTIMIZEMENUTITLE_TEXT, tabName = "optimize", icon=icon("area-chart")),
     menuItem(INDIVMENUTITLE_TEXT, tabName="individual", icon=icon("file-o")),
     menuItem(PAIRSMENUTITLE_TEXT, tabName="pairs", icon=icon("files-o"))
@@ -207,6 +208,42 @@ statstab<-tabItem(
   )
 )
 
+grouptab<-tabItem(
+  tabName = "group",
+  fluidRow(
+    tabBox(
+      width = 12, title = GROUPSTABTITLE_TEXT,
+      tabPanel(
+        icon = icon("check-circle"), title = HCLUSTTABTITLE_TEXT,
+        fluidRow(
+          box(width = 12, title = HCLUSTPLOTTITLE_TEXT,
+              plotOutput("hclustplot")
+          ),
+          box(width = 12, title = HCLUSTTEXTTITLE_TEXT,
+              verbatimTextOutput("hclusttext")
+          )
+        )
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = KMEANSTABTITLE_TEXT,
+        fluidRow(
+          box(width = 12, title = KMEANSPLOTTITLE_TEXT,
+              verbatimTextOutput("kmeanstext")
+          )
+        )
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = EIGENTABTITLE_TEXT,
+        fluidRow(
+          box(width = 12, title = EIGENPLOTTITLE_TEXT,
+              plotOutput("coreigenplot")
+          )
+        )
+      )
+    )
+  )
+)
+
 optimizetab<-tabItem(
   tabName = "optimize",
   fluidRow(
@@ -310,7 +347,7 @@ pairstab<-tabItem(
 )
 
 body<-dashboardBody(
-  tabItems(datatab, statstab,
+  tabItems(datatab, statstab, grouptab,
            optimizetab, individualtab,
            pairstab)
 )

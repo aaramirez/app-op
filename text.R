@@ -65,6 +65,19 @@ COMPROBUSTCOVAR_TEXT<-"Comparación de Medidas de Covarianzas Robustas"
 ROBUSTCOVAR1_TEXT<-"Covarianza robusta 1"
 ROBUSTCOVAR2_TEXT<-"Covarianza robusta 2"
 
+# group tab
+
+CLUSTERMENUTITLE_TEXT<-"Agrupar instrumentos"
+GROUPSTABTITLE_TEXT<-"Clustering y K-medias"
+HCLUSTTABTITLE_TEXT<-"hclust"
+HCLUSTPLOTTITLE_TEXT<-"Gráfico de Clusters"
+HCLUSTTEXTTITLE_TEXT<-"Resultado de hclust"
+KMEANSTABTITLE_TEXT<-"kmeans"
+KMEANSPLOTTITLE_TEXT<-"Gráfico de Kmedias"
+KMEANSTEXTTITLE_TEXT<-"Resultado de kmedias"
+EIGENTABTITLE_TEXT<-"Análisis por Valores propios"
+EIGENPLOTTITLE_TEXT<-"Gráfico por Valores propios"
+
 # optimize tab
 
 EFFICIENTFRONTIER_TEXT<-"Frontera eficiente"
