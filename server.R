@@ -318,10 +318,38 @@ shinyServer(function(input, output) {
 
   ## optimize tab outputs - Begin
 
+  ps<-reactive({
+    portfolioSpec(
+      model = list(
+        type="MV",
+        optimize="minRisk",
+        estimator="covEstimator",
+        tailRisk=list(),
+        params=list(
+          alpha=0.05,
+          a=1
+        )
+      ),
+      portfolio = list(
+        weights=NULL,
+        targetReturn=NULL,
+        targetRisk=NULL,
+        riskFreeRate=0,
+        nFrontierPoints=50,
+        status=NA
+      ),
+      optim = list(
+        solver=input$solver,
+        objective=NULL,
+        options=list(),
+        control=list(),
+        trace=FALSE
+      )
+    )
+  })
+
   frontierCalc <- reactive({
-    shortSpec<-portfolioSpec()
-    setSolver(shortSpec)<-"solveRshortExact"
-    portfolioFrontier(returns(), spec=shortSpec,constraints="Short")
+    portfolioFrontier(returns(), spec=ps(), constraints="Short")
   })
 
   output$efplot <- renderPlot({
@@ -337,10 +365,13 @@ shinyServer(function(input, output) {
 
   output$vmtext <- renderPrint({
     minvariancePortfolio(returns())
-    Spec = portfolioSpec()
-    setSolver(Spec)<-"solveRshortExact"
-    setTargetReturn(Spec) = input$mvmu
-    efficientPortfolio(returns(), Spec)
+    ps = ps()
+    setTargetReturn(ps) = input$mvmu
+    efficientPortfolio(returns(), ps)
+  })
+
+  output$actualconfoptimize<- renderPrint({
+    print(ps)
   })
 
   ## optimize tab outputs - End

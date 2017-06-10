@@ -270,15 +270,52 @@ grouptab<-tabItem(
 optimizetab<-tabItem(
   tabName = "optimize",
   fluidRow(
-    box(width = 12, title = EFFICIENTFRONTIER_TEXT,
-        plotOutput("efplot")
-    ),
-    box(width = 12, title = WEIGHTSCHART_TEXT,
-        plotOutput("wplot")
-    ),
-    box(width = 12, title = MINVARPORTFOLIO_TEXT,
-        sliderInput("mvmu", label="mu", min=0, max = 3, value = 0.05, step = 0.01),
-        verbatimTextOutput("vmtext")
+    tabBox(
+      width = 12, title = OPTIMIZETABTITLE_TEXT,
+      tabPanel(
+        icon = icon("check-circle"), title = EFFICIENTFRONTIER_TEXT,
+        fluidRow(
+          box(width = 12, title = "",
+              plotOutput("efplot")
+          )
+        )
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = WEIGHTSCHART_TEXT,
+        fluidRow(
+          box(width = 12, title = "",
+              plotOutput("wplot")
+          )
+        )
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = MINVARPORTFOLIO_TEXT,
+        fluidRow(
+          box(width = 12, title = "",
+              sliderInput("mvmu", label="mu", min=0, max = 3, value = 0.05, step = 0.01),
+              verbatimTextOutput("vmtext")
+          )
+        )
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = CONFOPTIMIZE_TEXT,
+        fluidRow(
+          box(width = 12, title = "",
+              selectInput(inputId = "solver",
+                          label = SOLVER_TEXT,
+                          choices = SOLVER_CONF
+              )
+          )
+        )
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = ACTUALCONFOPTIMIZE_TEXT,
+        fluidRow(
+          box(width = 12, title = "",
+              verbatimTextOutput("actualconfoptimize")
+          )
+        )
+      )
     )
   )
 )

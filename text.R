@@ -87,9 +87,14 @@ EIGENPLOTTITLE_TEXT<-"Gráfico por Valores propios"
 
 # optimize tab
 
+OPTIMIZETABTITLE_TEXT<-"Optimización"
 EFFICIENTFRONTIER_TEXT<-"Frontera eficiente"
 WEIGHTSCHART_TEXT<-"Gráfico de pesos"
 MINVARPORTFOLIO_TEXT<-"Portafolio de Varianza Mínima"
+CONFOPTIMIZE_TEXT<-"Parámetros"
+ACTUALCONFOPTIMIZE_TEXT<-"Parámetros actuales"
+
+SOLVER_TEXT<-"Función de optimización"
 
 
 # individual tab

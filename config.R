@@ -47,4 +47,20 @@ COVESTIMATOR_CONF<-c("covEstimator"="covEstimator", "mveEstimator"="mveEstimator
                      "covMcdEstimator"="covMcdEstimator", "covOGKEstimator"="covOGKEstimator",
                      "nnveEstimator"="nnveEstimator", "shrinkEstimator"="shrinkEstimator")
 
+#"solveRquadprog" Rmetrics default QP solver
+#"solveRglpk" Rmetrics default LP solver
+#"solveRshortExact" analytical short selling QP solver
+#"solveRipop" alternative QP solver
+#"solveRlpSolveAPI" alternative LP solver
+#"solveRsymphony" alternative LP solver
+#"solveRsocp" QP solver for quadratic constraints
+#"solveRdonlp2" NL solver for non-linear constraints
 
+SOLVER_CONF<-c("solveRquadprog"="solveRquadprog",
+               "solveRglpk"="solveRglpk",
+               "solveRshortExact"="solveRshortExact",
+               "solveRipop"="solveRipop",
+               "solveRlpSolveAPI"="solveRlpSolveAPI",
+               "solveRsymphony"="solveRsymphony",
+               "solveRsocp"="solveRsocp",
+               "solveRdonlp2"="solveRdonlp2")
