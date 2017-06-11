@@ -292,27 +292,74 @@ optimizetab<-tabItem(
         icon = icon("check-circle"), title = MINVARPORTFOLIO_TEXT,
         fluidRow(
           box(width = 12, title = "",
-              sliderInput("mvmu", label="mu", min=0, max = 3, value = 0.05, step = 0.01),
               verbatimTextOutput("vmtext")
+          )
+        )
+      ),
+      tabPanel(
+        icon = icon("check-circle"), title = EFICIENTPORTFOLIO_TEXT,
+        fluidRow(
+          box(width = 3, title = "",
+              checkboxInput("nullmu",label = "¿Retorno=NULL?", value = FALSE)
+          ),
+          box(width = 3, title = "",
+              sliderInput("targetmu", label="Retorno", min=0, max = 3, value = 0.05, step = 0.01)
+          ),
+          box(width = 3, title = "",
+              checkboxInput("nullrisk",label = "¿Riesgo=NULL?", value = FALSE)
+          ),
+          box(width = 3, title = "",
+              sliderInput("targetrisk", label="Riesgo", min=0, max = 3, value = 0.05, step = 0.01)
+          ),
+          box(width = 3, title = "",
+              sliderInput("riskfreerate", label="Tasa libre de riesgo", min=0, max = 0.1, value = 0, step = 0.005)
+          ),
+          box(width = 3, title = "",
+              selectInput(inputId = "constrains",
+                          label = CONSTRAINS_TEXT,
+                          choices = CONSTRAINS_CONF
+              )
+          ),
+          box(width=12, title="",
+              verbatimTextOutput("eftext")
           )
         )
       ),
       tabPanel(
         icon = icon("check-circle"), title = CONFOPTIMIZE_TEXT,
         fluidRow(
-          box(width = 12, title = "",
+          box(width = 4, title = "",
+              selectInput(inputId = "porttype",
+                          label = PORTTYPE_TEXT,
+                          choices = PORTTYPE_CONF
+              )
+          ),
+          box(width = 4, title = "",
+              selectInput(inputId = "portoptimize",
+                          label = PORTOPTIMIZE_TEXT,
+                          choices = PORTOPTIMIZE_CONF
+              )
+          ),
+          box(width = 4, title = "",
+              selectInput(inputId = "portcovest",
+                          label = PORTCOVESTIMATOR_TEXT,
+                          choices = PORTCOVESTIMATOR_CONF
+              )
+          ),
+          box(width = 4, title = "",
+              sliderInput("varalpha", label=VARALPHA_TEXT, min=0.8, max = 1, value = 0.95, step = 0.01)
+          ),
+          box(width = 4, title = "",
+              sliderInput("lpmriskmeasureexponent", label=LPMRISKEXP_TEXT, min=1, max = 10, value = 1, step = 1)
+          ),
+          box(width = 4, title = "",
               selectInput(inputId = "solver",
                           label = SOLVER_TEXT,
                           choices = SOLVER_CONF
               )
-          )
-        )
-      ),
-      tabPanel(
-        icon = icon("check-circle"), title = ACTUALCONFOPTIMIZE_TEXT,
-        fluidRow(
-          box(width = 12, title = "",
-              verbatimTextOutput("actualconfoptimize")
+          ),
+          box(width = 12, title="",
+            verbatimTextOutput("actualconfoptimize")
           )
         )
       )

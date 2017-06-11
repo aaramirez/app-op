@@ -47,6 +47,60 @@ COVESTIMATOR_CONF<-c("covEstimator"="covEstimator", "mveEstimator"="mveEstimator
                      "covMcdEstimator"="covMcdEstimator", "covOGKEstimator"="covOGKEstimator",
                      "nnveEstimator"="nnveEstimator", "shrinkEstimator"="shrinkEstimator")
 
+
+#"MV" mean-variance (Markowitz) portfolio
+#"CVAR" mean-conditional Value at Risk portfolio
+#"QLPM" mean-quadratic-lower-partial-moment portfolio
+#"SPS" Stone, Pedersen and Satchell type portfolios
+#"MAD" mean-absolute-deviance Portfolio
+
+PORTTYPE_CONF<-c("MV"="MV",
+            "CVAR"="CVAR",
+            "QLPM"="QLPM",
+            "SPS"="SPS",
+            "MAD"="MAD")
+
+#"minRisk" minimizes the risk for a given target return
+#"maxReturn" maximizes the return for a given target risk
+#"objRisk" gives the name of an alternative objective function
+
+PORTOPTIMIZE_CONF<-c("minRisk"="minRisk",
+                     "maxReturn"="maxReturn",
+                     "objRisk"="objRisk")
+
+
+#Model Slot: specifies the type of estimator
+#List Entry:
+#  estimator
+#"covEstimator" Covariance sample estimator
+#"kendallEstimator" Kendall's rank estimator
+#"spearmanEstimator" Spearman's rank estimator
+#"mcdEstimator" Minimum covariance determinant estimator
+#"mveEstimator" Minimum volume ellipsoid estimator
+#"covMcdEstimator" Minimum covariance determinant estimator
+#"covOGKEstimator" Orthogonalized Gnanadesikan-Kettenring
+#"shrinkEstimator" Shrinkage estimator
+#"baggedEstimator" Bagged Estimator
+#"nnveEstimator" Nearest neighbour variance estimator
+#The list entry $estimator from the @model slot requires a string denoting
+#the function name of the covariance estimator that should be used for
+#estimating risk. InMarkowitz’ mean-variance portfolio model, type="MV",
+#the default function covEstimator() is used, which computes the sample
+#column means and the sample covariance matrix of the multivariate
+#assets data series.
+
+PORTCOVESTIMATOR_CONF<-c("covEstimator"="covEstimator",
+                         "kendallEstimator"="kendallEstimator",
+                         "spearmanEstimator"="spearmanEstimator",
+                         "mcdEstimator"="mcdEstimator",
+                         "mcdEstimator"="mcdEstimator",
+                         "covMcdEstimator"="covMcdEstimator",
+                         "covOGKEstimator"="covOGKEstimator",
+                         "shrinkEstimator"="shrinkEstimator",
+                         "baggedEstimator"="baggedEstimator",
+                         "nnveEstimator"="nnveEstimator")
+
+
 #"solveRquadprog" Rmetrics default QP solver
 #"solveRglpk" Rmetrics default LP solver
 #"solveRshortExact" analytical short selling QP solver
@@ -64,3 +118,7 @@ SOLVER_CONF<-c("solveRquadprog"="solveRquadprog",
                "solveRsymphony"="solveRsymphony",
                "solveRsocp"="solveRsocp",
                "solveRdonlp2"="solveRdonlp2")
+
+
+CONSTRAINS_CONF<-c("LongOnly"="LongOnly",
+                   "Short"="Short")

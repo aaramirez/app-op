@@ -319,22 +319,32 @@ shinyServer(function(input, output) {
   ## optimize tab outputs - Begin
 
   ps<-reactive({
+    if (input$nullmu) {
+      mu<-NULL
+    } else {
+      mu<-input$targetmu
+    }
+    if (input$nullrisk) {
+      risk<-NULL
+    } else {
+      risk<-input$targetrisk
+    }
     portfolioSpec(
       model = list(
-        type="MV",
-        optimize="minRisk",
-        estimator="covEstimator",
+        type=input$porttype,
+        optimize=input$portoptimize,
+        estimator=input$portcovest,
         tailRisk=list(),
         params=list(
-          alpha=0.05,
-          a=1
+          alpha=as.double(input$varalpha),
+          a=as.integer(input$lpmriskmeasureexponent)
         )
       ),
       portfolio = list(
         weights=NULL,
-        targetReturn=NULL,
-        targetRisk=NULL,
-        riskFreeRate=0,
+        targetReturn=mu,
+        targetRisk=risk,
+        riskFreeRate=input$riskfreerate,
         nFrontierPoints=50,
         status=NA
       ),
@@ -349,11 +359,10 @@ shinyServer(function(input, output) {
   })
 
   frontierCalc <- reactive({
-    portfolioFrontier(returns(), spec=ps(), constraints="Short")
+    portfolioFrontier(returns(), spec = ps(), constraints = input$constrains)
   })
 
   output$efplot <- renderPlot({
-    #print(shortFrontier)
     frontierPlot(frontierCalc(), frontier = "both", risk="Sigma", type="l")
     minvariancePoints(frontierCalc(), pch=19, col="red")
     singleAssetPoints(frontierCalc(), risk = "Sigma", pch=19, cex=1.5, col=topo.colors(6))
@@ -364,14 +373,15 @@ shinyServer(function(input, output) {
   })
 
   output$vmtext <- renderPrint({
-    minvariancePortfolio(returns())
-    ps = ps()
-    setTargetReturn(ps) = input$mvmu
-    efficientPortfolio(returns(), ps)
+    minvariancePortfolio(returns(), spec = ps(), constraints = input$constrains)
+  })
+
+  output$eftext<- renderPrint({
+    efficientPortfolio(returns(), spec = ps(), constraints = input$constrains)
   })
 
   output$actualconfoptimize<- renderPrint({
-    print(ps)
+    print(ps())
   })
 
   ## optimize tab outputs - End

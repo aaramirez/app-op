@@ -91,11 +91,19 @@ OPTIMIZETABTITLE_TEXT<-"Optimización"
 EFFICIENTFRONTIER_TEXT<-"Frontera eficiente"
 WEIGHTSCHART_TEXT<-"Gráfico de pesos"
 MINVARPORTFOLIO_TEXT<-"Portafolio de Varianza Mínima"
+EFICIENTPORTFOLIO_TEXT<-"Portafolio Eficiente con retorno mu"
 CONFOPTIMIZE_TEXT<-"Parámetros"
 ACTUALCONFOPTIMIZE_TEXT<-"Parámetros actuales"
 
-SOLVER_TEXT<-"Función de optimización"
+PORTTYPE_TEXT<-"Tipo de Portafolio"
+PORTOPTIMIZE_TEXT<-"Función a Optimizar"
+PORTCOVESTIMATOR_TEXT<-"Función de estimación de la Covarianza"
+VARALPHA_TEXT<-"Nivel de significancia del VaR (alpha)"
 
+LPMRISKEXP_TEXT<-"Exponente de la medida de riesgo LPM"
+SOLVER_TEXT<-"Función de Optimización"
+
+CONSTRAINS_TEXT<-"Posiciones permitidas"
 
 # individual tab
 
