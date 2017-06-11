@@ -318,70 +318,201 @@ shinyServer(function(input, output) {
 
   ## optimize tab outputs - Begin
 
-  ps<-reactive({
-    if (input$nullmu) {
-      mu<-NULL
+  createPortSpec<- function(nullmu, mu, nullrisk, risk, riskfreerate,
+                            porttype, portoptimize, portcovest,
+                            varalpha, lpmriskmeasureexponent, solver) {
+    if (nullmu) {
+      mui<-NULL
     } else {
-      mu<-input$targetmu
+      mui<-mu
     }
-    if (input$nullrisk) {
-      risk<-NULL
+    if (nullrisk) {
+      riski<-NULL
     } else {
-      risk<-input$targetrisk
+      riski<-risk
     }
     portfolioSpec(
       model = list(
-        type=input$porttype,
-        optimize=input$portoptimize,
-        estimator=input$portcovest,
+        type=porttype,
+        optimize=portoptimize,
+        estimator=portcovest,
         tailRisk=list(),
         params=list(
-          alpha=as.double(input$varalpha),
-          a=as.integer(input$lpmriskmeasureexponent)
+          alpha=as.double(varalpha),
+          a=as.integer(lpmriskmeasureexponent)
         )
       ),
       portfolio = list(
         weights=NULL,
-        targetReturn=mu,
-        targetRisk=risk,
-        riskFreeRate=input$riskfreerate,
+        targetReturn=mui,
+        targetRisk=riski,
+        riskFreeRate=riskfreerate,
         nFrontierPoints=50,
         status=NA
       ),
       optim = list(
-        solver=input$solver,
+        solver=solver,
         objective=NULL,
         options=list(),
         control=list(),
         trace=FALSE
       )
     )
+  }
+
+  psep<-reactive({
+    createPortSpec(input$nullmuep,
+                   input$targetmuep,
+                   input$nullriskep,
+                   input$targetriskep,
+                   input$riskfreerateep,
+                   input$porttypeep,
+                   input$portoptimizeep,
+                   input$portcovestep,
+                   input$varalphaep,
+                   input$lpmriskmeasureexponentep,
+                   input$solverep)
   })
 
-  frontierCalc <- reactive({
-    portfolioFrontier(returns(), spec = ps(), constraints = input$constrains)
+  # TODO: usar spec diferentes y constrains diferentes
+  frontierCalcep <- reactive({
+    portfolioFrontier(returns(), spec = psep(), constraints = input$constrainsep)
   })
 
-  output$efplot <- renderPlot({
-    frontierPlot(frontierCalc(), frontier = "both", risk="Sigma", type="l")
-    minvariancePoints(frontierCalc(), pch=19, col="red")
-    singleAssetPoints(frontierCalc(), risk = "Sigma", pch=19, cex=1.5, col=topo.colors(6))
+  output$plotep <- renderPlot({
+    frontierPlot(frontierCalcep(), frontier = "both", risk="Sigma", type="l")
+    minvariancePoints(frontierCalcep(), pch=19, col="red")
+    singleAssetPoints(frontierCalcep(), risk = "Sigma", pch=19, cex=1.5, col=topo.colors(6))
   })
 
-  output$wplot <- renderPlot({
-    weightsPlot(frontierCalc())
+  output$wplotep <- renderPlot({
+    weightsPlot(frontierCalcep())
   })
 
-  output$vmtext <- renderPrint({
-    minvariancePortfolio(returns(), spec = ps(), constraints = input$constrains)
+  output$optimizeparamsep<- renderPrint({
+    print(psep())
   })
 
-  output$eftext<- renderPrint({
-    efficientPortfolio(returns(), spec = ps(), constraints = input$constrains)
+  output$textep<- renderPrint({
+    # efficientPortfolio returns the portfolio with the lowest
+    # risk for a given target return
+    efficientPortfolio(returns(), spec = psep(), constraints = input$constrainsep)
   })
 
-  output$actualconfoptimize<- renderPrint({
-    print(ps())
+  pstp<-reactive({
+    createPortSpec(input$nullmutp,
+                   input$targetmutp,
+                   input$nullrisktp,
+                   input$targetrisktp,
+                   input$riskfreeratetp,
+                   input$porttypetp,
+                   input$portoptimizetp,
+                   input$portcovesttp,
+                   input$varalphatp,
+                   input$lpmriskmeasureexponenttp,
+                   input$solvertp)
+  })
+
+  frontierCalctp <- reactive({
+    portfolioFrontier(returns(), spec = pstp(), constraints = input$constrainstp)
+  })
+
+  output$plottp <- renderPlot({
+    frontierPlot(frontierCalctp(), frontier = "both", risk="Sigma", type="l")
+    minvariancePoints(frontierCalctp(), pch=19, col="red")
+    singleAssetPoints(frontierCalctp(), risk = "Sigma", pch=19, cex=1.5, col=topo.colors(6))
+  })
+
+  output$wplottp <- renderPlot({
+    weightsPlot(frontierCalctp())
+  })
+
+  output$optimizeparamstp<- renderPrint({
+    print(pstp())
+  })
+
+  output$texttp<- renderPrint({
+    # maxratioPortfolio returns the portfolio with the highest
+    # return/risk ratio
+    # tangencyPortfolio synonym for maxratioPortfolio
+    tangencyPortfolio(returns(), spec = pstp(), constraints = input$constrainstp)
+  })
+
+  psmv<-reactive({
+    createPortSpec(input$nullmumv,
+                   input$targetmumv,
+                   input$nullriskmv,
+                   input$targetriskmv,
+                   input$riskfreeratemv,
+                   input$porttypemv,
+                   input$portoptimizemv,
+                   input$portcovestmv,
+                   input$varalphamv,
+                   input$lpmriskmeasureexponentmv,
+                   input$solvermv)
+  })
+
+  frontierCalcmv <- reactive({
+    portfolioFrontier(returns(), spec = psmv(), constraints = input$constrainsmv)
+  })
+
+  output$plotmv <- renderPlot({
+    frontierPlot(frontierCalcmv(), frontier = "both", risk="Sigma", type="l")
+    minvariancePoints(frontierCalcmv(), pch=19, col="red")
+    singleAssetPoints(frontierCalcmv(), risk = "Sigma", pch=19, cex=1.5, col=topo.colors(6))
+  })
+
+  output$wplotmv <- renderPlot({
+    weightsPlot(frontierCalcmv())
+  })
+
+  output$optimizeparamsmv<- renderPrint({
+    print(psmv())
+  })
+
+  output$textmv <- renderPrint({
+    # minriskPortfolio returns a portfolio with the lowest
+    # risk at all
+    # minvariancePortfolio synonym for minriskPortfolio
+    minvariancePortfolio(returns(), spec = psmv(), constraints = input$constrainsmv)
+  })
+
+  psmr<-reactive({
+    createPortSpec(input$nullmumr,
+                   input$targetmumr,
+                   input$nullriskmr,
+                   input$targetriskmr,
+                   input$riskfreeratemr,
+                   input$porttypemr,
+                   input$portoptimizemr,
+                   input$portcovestmr,
+                   input$varalphamr,
+                   input$lpmriskmeasureexponentmr,
+                   input$solvermr)
+  })
+
+  frontierCalcmr <- reactive({
+    portfolioFrontier(returns(), spec = psmr(), constraints = input$constrainsmr)
+  })
+
+  output$plotmr <- renderPlot({
+    frontierPlot(frontierCalcmr(), frontier = "both", risk="Sigma", type="l")
+    minvariancePoints(frontierCalcmr(), pch=19, col="red")
+    singleAssetPoints(frontierCalcmr(), risk = "Sigma", pch=19, cex=1.5, col=topo.colors(6))
+  })
+
+  output$wplotmr <- renderPlot({
+    weightsPlot(frontierCalcmr())
+  })
+
+  output$optimizeparamsmr<- renderPrint({
+    print(psmr())
+  })
+
+  output$textmr <- renderPrint({
+    # maxreturnPortfolio returns the portfolio with the highest
+    # return for a given target risk
+    maxreturnPortfolio(returns(), spec = psmr(), constraints = input$constrainsmr)
   })
 
   ## optimize tab outputs - End

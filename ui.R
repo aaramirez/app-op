@@ -273,93 +273,350 @@ optimizetab<-tabItem(
     tabBox(
       width = 12, title = OPTIMIZETABTITLE_TEXT,
       tabPanel(
-        icon = icon("check-circle"), title = EFFICIENTFRONTIER_TEXT,
-        fluidRow(
-          box(width = 12, title = "",
-              plotOutput("efplot")
+        icon = icon("check-circle"), title = EFICIENTPORTFOLIO_TEXT,
+        tabsetPanel(
+          tabPanel(
+            title = CHARTS_TEXT,
+            fluidRow(
+              box(width = 12, title = EFFICIENTFRONTIER_TEXT,
+                  plotOutput("plotep")
+              ),
+              box(width = 12, title = WEIGHTSCHART_TEXT,
+                  plotOutput("wplotep")
+              )
+            )
+          ),
+          tabPanel(
+            title = PORTFOLIO_TEXT,
+            fluidRow(
+              box(width=12, title="",
+                  verbatimTextOutput("textep")
+              ),
+              box(width = 12, title = "",
+                  verbatimTextOutput("optimizeparamsep")
+              )
+            )
+          ),
+          tabPanel(
+            title = PARAMS_TEXT,
+            fluidRow(
+              box(width = 3, title = "",
+                  selectInput(inputId = "porttypeep",
+                              label = PORTTYPE_TEXT,
+                              choices = PORTTYPE_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "portoptimizeep",
+                              label = PORTOPTIMIZE_TEXT,
+                              choices = PORTOPTIMIZE_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "portcovestep",
+                              label = PORTCOVESTIMATOR_TEXT,
+                              choices = PORTCOVESTIMATOR_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  sliderInput("varalphaep", label=VARALPHA_TEXT, min=0.8, max = 1, value = 0.95, step = 0.01)
+              )
+            ),
+            fluidRow(
+              box(width = 3, title = "",
+                  sliderInput("lpmriskmeasureexponentep", label=LPMRISKEXP_TEXT, min=1, max = 10, value = 1, step = 1)
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "solverep",
+                              label = SOLVER_TEXT,
+                              choices = SOLVER_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  checkboxInput("nullmuep",label = NULLRETURN_TEXT, value = TRUE)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("targetmuep", label = RETURN_TEXT, min=0, max = 3, value = 0.05, step = 0.01)
+              )
+            ),
+            fluidRow(
+              box(width = 3, title = "",
+                  checkboxInput("nullriskep",label = NULLRISK_TEXT, value = TRUE)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("targetriskep", label = RISK_TEXT, min=0, max = 3, value = 0.05, step = 0.01)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("riskfreerateep", label = RISKFREE_TEXT, min=0, max = 0.1, value = 0, step = 0.005)
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "constrainsep",
+                              label = CONSTRAINS_TEXT,
+                              choices = CONSTRAINS_CONF
+                  )
+              )
+            )
           )
         )
       ),
       tabPanel(
-        icon = icon("check-circle"), title = WEIGHTSCHART_TEXT,
-        fluidRow(
-          box(width = 12, title = "",
-              plotOutput("wplot")
+        icon = icon("check-circle"), title = TANGENCYPORTFOLIO_TEXT,
+        tabsetPanel(
+          tabPanel(
+            title = CHARTS_TEXT,
+            fluidRow(
+              box(width = 12, title = EFFICIENTFRONTIER_TEXT,
+                  plotOutput("plottp")
+              ),
+              box(width = 12, title = WEIGHTSCHART_TEXT,
+                  plotOutput("wplottp")
+              )
+            )
+          ),
+          tabPanel(
+            title = PORTFOLIO_TEXT,
+            fluidRow(
+              box(width=12, title="",
+                  verbatimTextOutput("texttp")
+              ),
+              box(width = 12, title = "",
+                  verbatimTextOutput("optimizeparamstp")
+              )
+            )
+          ),
+          tabPanel(
+            title = PARAMS_TEXT,
+            fluidRow(
+              box(width = 3, title = "",
+                  selectInput(inputId = "porttypetp",
+                              label = PORTTYPE_TEXT,
+                              choices = PORTTYPE_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "portoptimizetp",
+                              label = PORTOPTIMIZE_TEXT,
+                              choices = PORTOPTIMIZE_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "portcovesttp",
+                              label = PORTCOVESTIMATOR_TEXT,
+                              choices = PORTCOVESTIMATOR_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  sliderInput("varalphatp", label=VARALPHA_TEXT, min=0.8, max = 1, value = 0.95, step = 0.01)
+              )
+            ),
+            fluidRow(
+              box(width = 3, title = "",
+                  sliderInput("lpmriskmeasureexponenttp", label=LPMRISKEXP_TEXT, min=1, max = 10, value = 1, step = 1)
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "solvertp",
+                              label = SOLVER_TEXT,
+                              choices = SOLVER_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  checkboxInput("nullmutp",label = NULLRETURN_TEXT, value = TRUE)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("targetmutp", label = RETURN_TEXT, min=0, max = 3, value = 0.05, step = 0.01)
+              )
+            ),
+            fluidRow(
+              box(width = 3, title = "",
+                  checkboxInput("nullrisktp",label = NULLRISK_TEXT, value = TRUE)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("targetrisktp", label = RISK_TEXT, min=0, max = 3, value = 0.05, step = 0.01)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("riskfreeratetp", label = RISKFREE_TEXT, min=0, max = 0.1, value = 0, step = 0.005)
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "constrainstp",
+                              label = CONSTRAINS_TEXT,
+                              choices = CONSTRAINS_CONF
+                  )
+              )
+            )
           )
         )
       ),
       tabPanel(
         icon = icon("check-circle"), title = MINVARPORTFOLIO_TEXT,
-        fluidRow(
-          box(width = 12, title = "",
-              verbatimTextOutput("vmtext")
+        tabsetPanel(
+          tabPanel(
+            title = CHARTS_TEXT,
+            fluidRow(
+              box(width = 12, title = EFFICIENTFRONTIER_TEXT,
+                  plotOutput("plotmv")
+              ),
+              box(width = 12, title = WEIGHTSCHART_TEXT,
+                  plotOutput("wplotmv")
+              )
+            )
+          ),
+          tabPanel(
+            title = PORTFOLIO_TEXT,
+            fluidRow(
+              box(width=12, title="",
+                  verbatimTextOutput("textmv")
+              ),
+              box(width = 12, title = "",
+                  verbatimTextOutput("optimizeparamsmv")
+              )
+            )
+          ),
+          tabPanel(
+            title = PARAMS_TEXT,
+            fluidRow(
+              box(width = 3, title = "",
+                  selectInput(inputId = "porttypemv",
+                              label = PORTTYPE_TEXT,
+                              choices = PORTTYPE_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "portoptimizemv",
+                              label = PORTOPTIMIZE_TEXT,
+                              choices = PORTOPTIMIZE_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "portcovestmv",
+                              label = PORTCOVESTIMATOR_TEXT,
+                              choices = PORTCOVESTIMATOR_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  sliderInput("varalphamv", label=VARALPHA_TEXT, min=0.8, max = 1, value = 0.95, step = 0.01)
+              )
+            ),
+            fluidRow(
+              box(width = 3, title = "",
+                  sliderInput("lpmriskmeasureexponentmv", label=LPMRISKEXP_TEXT, min=1, max = 10, value = 1, step = 1)
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "solvermv",
+                              label = SOLVER_TEXT,
+                              choices = SOLVER_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  checkboxInput("nullmumv",label = NULLRETURN_TEXT, value = FALSE)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("targetmumv", label = RETURN_TEXT, min=0, max = 3, value = 0.05, step = 0.01)
+              )
+            ),
+            fluidRow(
+              box(width = 3, title = "",
+                  checkboxInput("nullriskmv",label = NULLRISK_TEXT, value = TRUE)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("targetriskmv", label = RISK_TEXT, min=0, max = 3, value = 0.05, step = 0.01)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("riskfreeratemv", label = RISKFREE_TEXT, min=0, max = 0.1, value = 0, step = 0.005)
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "constrainsmv",
+                              label = CONSTRAINS_TEXT,
+                              choices = CONSTRAINS_CONF
+                  )
+              )
+            )
           )
         )
       ),
       tabPanel(
-        icon = icon("check-circle"), title = EFICIENTPORTFOLIO_TEXT,
-        fluidRow(
-          box(width = 3, title = "",
-              checkboxInput("nullmu",label = "¿Retorno=NULL?", value = FALSE)
-          ),
-          box(width = 3, title = "",
-              sliderInput("targetmu", label="Retorno", min=0, max = 3, value = 0.05, step = 0.01)
-          ),
-          box(width = 3, title = "",
-              checkboxInput("nullrisk",label = "¿Riesgo=NULL?", value = FALSE)
-          ),
-          box(width = 3, title = "",
-              sliderInput("targetrisk", label="Riesgo", min=0, max = 3, value = 0.05, step = 0.01)
-          ),
-          box(width = 3, title = "",
-              sliderInput("riskfreerate", label="Tasa libre de riesgo", min=0, max = 0.1, value = 0, step = 0.005)
-          ),
-          box(width = 3, title = "",
-              selectInput(inputId = "constrains",
-                          label = CONSTRAINS_TEXT,
-                          choices = CONSTRAINS_CONF
+        icon = icon("check-circle"), title = MAXRETURNPORTFOLIO_TEXT,
+        tabsetPanel(
+          tabPanel(
+            title = CHARTS_TEXT,
+            fluidRow(
+              box(width = 12, title = EFFICIENTFRONTIER_TEXT,
+                  plotOutput("plotmr")
+              ),
+              box(width = 12, title = WEIGHTSCHART_TEXT,
+                  plotOutput("wplotmr")
               )
+            )
           ),
-          box(width=12, title="",
-              verbatimTextOutput("eftext")
-          )
-        )
-      ),
-      tabPanel(
-        icon = icon("check-circle"), title = CONFOPTIMIZE_TEXT,
-        fluidRow(
-          box(width = 4, title = "",
-              selectInput(inputId = "porttype",
-                          label = PORTTYPE_TEXT,
-                          choices = PORTTYPE_CONF
+          tabPanel(
+            title = PORTFOLIO_TEXT,
+            fluidRow(
+              box(width=12, title="",
+                  verbatimTextOutput("textmr")
+              ),
+              box(width = 12, title = "",
+                  verbatimTextOutput("optimizeparamsmr")
               )
+            )
           ),
-          box(width = 4, title = "",
-              selectInput(inputId = "portoptimize",
-                          label = PORTOPTIMIZE_TEXT,
-                          choices = PORTOPTIMIZE_CONF
+          tabPanel(
+            title = PARAMS_TEXT,
+            fluidRow(
+              box(width = 3, title = "",
+                  selectInput(inputId = "porttypemr",
+                              label = PORTTYPE_TEXT,
+                              choices = PORTTYPE_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "portoptimizemr",
+                              label = PORTOPTIMIZE_TEXT,
+                              choices = PORTOPTIMIZE_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "portcovestmr",
+                              label = PORTCOVESTIMATOR_TEXT,
+                              choices = PORTCOVESTIMATOR_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  sliderInput("varalphamr", label=VARALPHA_TEXT, min=0.8, max = 1, value = 0.95, step = 0.01)
               )
-          ),
-          box(width = 4, title = "",
-              selectInput(inputId = "portcovest",
-                          label = PORTCOVESTIMATOR_TEXT,
-                          choices = PORTCOVESTIMATOR_CONF
+            ),
+            fluidRow(
+              box(width = 3, title = "",
+                  sliderInput("lpmriskmeasureexponentmr", label=LPMRISKEXP_TEXT, min=1, max = 10, value = 1, step = 1)
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "solvermr",
+                              label = SOLVER_TEXT,
+                              choices = SOLVER_CONF
+                  )
+              ),
+              box(width = 3, title = "",
+                  checkboxInput("nullmumr",label = NULLRETURN_TEXT, value = TRUE)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("targetmumr", label = RETURN_TEXT, min=0, max = 3, value = 0.05, step = 0.01)
               )
-          ),
-          box(width = 4, title = "",
-              sliderInput("varalpha", label=VARALPHA_TEXT, min=0.8, max = 1, value = 0.95, step = 0.01)
-          ),
-          box(width = 4, title = "",
-              sliderInput("lpmriskmeasureexponent", label=LPMRISKEXP_TEXT, min=1, max = 10, value = 1, step = 1)
-          ),
-          box(width = 4, title = "",
-              selectInput(inputId = "solver",
-                          label = SOLVER_TEXT,
-                          choices = SOLVER_CONF
+            ),
+            fluidRow(
+              box(width = 3, title = "",
+                  checkboxInput("nullriskmr",label = NULLRISK_TEXT, value = FALSE)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("targetriskmr", label = RISK_TEXT, min=0, max = 3, value = 0.05, step = 0.01)
+              ),
+              box(width = 3, title = "",
+                  sliderInput("riskfreeratemr", label = RISKFREE_TEXT, min=0, max = 0.1, value = 0, step = 0.005)
+              ),
+              box(width = 3, title = "",
+                  selectInput(inputId = "constrainsmr",
+                              label = CONSTRAINS_TEXT,
+                              choices = CONSTRAINS_CONF
+                  )
               )
-          ),
-          box(width = 12, title="",
-            verbatimTextOutput("actualconfoptimize")
+            )
           )
         )
       )

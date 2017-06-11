@@ -89,9 +89,16 @@ EIGENPLOTTITLE_TEXT<-"Gráfico por Valores propios"
 
 OPTIMIZETABTITLE_TEXT<-"Optimización"
 EFFICIENTFRONTIER_TEXT<-"Frontera eficiente"
+CHARTS_TEXT<-"Gráficos"
+PARAMS_TEXT<-"Parámetros"
 WEIGHTSCHART_TEXT<-"Gráfico de pesos"
+PORTFOLIO_TEXT<-"Portafolio"
+
+EFICIENTPORTFOLIO_TEXT<-"Portafolio Eficiente"
+TANGENCYPORTFOLIO_TEXT<-"Portafolio con mayor retorno/riesgo"
 MINVARPORTFOLIO_TEXT<-"Portafolio de Varianza Mínima"
-EFICIENTPORTFOLIO_TEXT<-"Portafolio Eficiente con retorno mu"
+MAXRETURNPORTFOLIO_TEXT<-"Portafolio de Retorno Máximo"
+
 CONFOPTIMIZE_TEXT<-"Parámetros"
 ACTUALCONFOPTIMIZE_TEXT<-"Parámetros actuales"
 
@@ -104,6 +111,13 @@ LPMRISKEXP_TEXT<-"Exponente de la medida de riesgo LPM"
 SOLVER_TEXT<-"Función de Optimización"
 
 CONSTRAINS_TEXT<-"Posiciones permitidas"
+
+NULLRETURN_TEXT<-"¿Retorno=NULL?"
+RETURN_TEXT<-"Retorno"
+NULLRISK_TEXT<-"¿Riesgo=NULL?"
+RISK_TEXT<-"Riesgo"
+RISKFREE_TEXT<-"Tasa libre de riesgo"
+
 
 # individual tab
 

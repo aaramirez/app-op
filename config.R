@@ -111,14 +111,30 @@ PORTCOVESTIMATOR_CONF<-c("covEstimator"="covEstimator",
 #"solveRdonlp2" NL solver for non-linear constraints
 
 SOLVER_CONF<-c("solveRquadprog"="solveRquadprog",
-               "solveRglpk"="solveRglpk",
+               "solveRquadprog.CLA"="solveRquadprog.CLA",
+               "solveRglpk.CVAR"="solveRglpk.CVAR",
+               "solveRglpk.MAD"="solveRglpk.MAD",
                "solveRshortExact"="solveRshortExact",
                "solveRipop"="solveRipop",
                "solveRlpSolveAPI"="solveRlpSolveAPI",
                "solveRsymphony"="solveRsymphony",
                "solveRsocp"="solveRsocp",
-               "solveRdonlp2"="solveRdonlp2")
+               "solveRsolnp"="solveRsolnp",
+               "solveRdonlp2"="solveRdonlp2",
+               "solveRampl.MV"="solveRampl.MV",
+               "solveRampl.CVAR"="solveRampl.CVAR")
 
 
 CONSTRAINS_CONF<-c("LongOnly"="LongOnly",
                    "Short"="Short")
+
+PARAMS_CONF<-c("Portafolio Eficiente"="ep",
+               "Portafolio mayor Retorno/Riesgo"="tp",
+               "Portafolio Varianza Mínima"="mv",
+               "Portafolio Retorno Máximo"="mr")
+
+
+
+
+
+
