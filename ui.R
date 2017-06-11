@@ -283,6 +283,15 @@ optimizetab<-tabItem(
               ),
               box(width = 12, title = WEIGHTSCHART_TEXT,
                   plotOutput("wplotep")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("wPieep")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("wRetPieep")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("covRiskBPieep")
               )
             )
           ),
@@ -370,6 +379,15 @@ optimizetab<-tabItem(
               ),
               box(width = 12, title = WEIGHTSCHART_TEXT,
                   plotOutput("wplottp")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("wPietp")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("wRetPietp")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("covRiskBPietp")
               )
             )
           ),
@@ -457,6 +475,15 @@ optimizetab<-tabItem(
               ),
               box(width = 12, title = WEIGHTSCHART_TEXT,
                   plotOutput("wplotmv")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("wPiemv")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("wRetPiemv")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("covRiskBPiemv")
               )
             )
           ),
@@ -544,6 +571,15 @@ optimizetab<-tabItem(
               ),
               box(width = 12, title = WEIGHTSCHART_TEXT,
                   plotOutput("wplotmr")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("wPiemr")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("wRetPiemr")
+              ),
+              box(width = 12, title = "",
+                  plotOutput("covRiskBPiemr")
               )
             )
           ),

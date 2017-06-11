@@ -393,10 +393,43 @@ shinyServer(function(input, output) {
     print(psep())
   })
 
+  col<- function(p) {
+    qualiPalette(ncol(returns()), p)
+  }
+
+  mtextop<- function(ps) {
+    mtext(text = paste0(ps@model$optimize, " ",
+                        ps@model$type, " Portfolio"),
+          side = 3,
+          line = 1.5,
+          font = 2,
+          cex = 0.7,
+          adj = 0)
+  }
+
+  ep<- reactive({
+    efficientPortfolio(returns(), spec = psep(), constraints = input$constrainsep)
+  })
+
   output$textep<- renderPrint({
     # efficientPortfolio returns the portfolio with the lowest
     # risk for a given target return
-    efficientPortfolio(returns(), spec = psep(), constraints = input$constrainsep)
+    ep()
+  })
+
+  output$wPieep<- renderPlot({
+    weightsPie(ep(), radius = 0.7, col = col("Dark2"))
+    mtextop(psep())
+  })
+
+  output$wRetPieep<- renderPlot({
+    weightedReturnsPie(ep(), radius = 0.7, col = col("Dark2"))
+    mtextop(psep())
+  })
+
+  output$covRiskBPieep<- renderPlot({
+    covRiskBudgetsPie(ep(), radius = 0.7, col = col("Dark2"))
+    mtextop(psep())
   })
 
   pstp<-reactive({
@@ -431,11 +464,30 @@ shinyServer(function(input, output) {
     print(pstp())
   })
 
-  output$texttp<- renderPrint({
+  tp<- reactive({
     # maxratioPortfolio returns the portfolio with the highest
     # return/risk ratio
     # tangencyPortfolio synonym for maxratioPortfolio
     tangencyPortfolio(returns(), spec = pstp(), constraints = input$constrainstp)
+  })
+
+  output$texttp<- renderPrint({
+    tp()
+  })
+
+  output$wPietp<- renderPlot({
+    weightsPie(tp(), box = FALSE, col = col("Paired"))
+    mtextop(pstp())
+  })
+
+  output$wRetPietp<- renderPlot({
+    weightedReturnsPie(tp(), box = FALSE, col = col("Paired"))
+    mtextop(pstp())
+  })
+
+  output$covRiskBPietp<- renderPlot({
+    covRiskBudgetsPie(tp(), box = FALSE, col = col("Paired"))
+    mtextop(pstp())
   })
 
   psmv<-reactive({
@@ -470,11 +522,30 @@ shinyServer(function(input, output) {
     print(psmv())
   })
 
-  output$textmv <- renderPrint({
+  mv<- reactive({
     # minriskPortfolio returns a portfolio with the lowest
     # risk at all
     # minvariancePortfolio synonym for minriskPortfolio
     minvariancePortfolio(returns(), spec = psmv(), constraints = input$constrainsmv)
+  })
+
+  output$textmv <- renderPrint({
+    mv()
+  })
+
+  output$wPiemv<- renderPlot({
+    weightsPie(mv(), box = FALSE, col = col("Paired"))
+    mtextop(psmv())
+  })
+
+  output$wRetPiemv<- renderPlot({
+    weightedReturnsPie(mv(), box = FALSE, col = col("Paired"))
+    mtextop(psmv())
+  })
+
+  output$covRiskBPiemv<- renderPlot({
+    covRiskBudgetsPie(mv(), box = FALSE, col = col("Paired"))
+    mtextop(psmv())
   })
 
   psmr<-reactive({
@@ -509,10 +580,29 @@ shinyServer(function(input, output) {
     print(psmr())
   })
 
-  output$textmr <- renderPrint({
+  mr<- reactive({
     # maxreturnPortfolio returns the portfolio with the highest
     # return for a given target risk
     maxreturnPortfolio(returns(), spec = psmr(), constraints = input$constrainsmr)
+  })
+
+  output$textmr <- renderPrint({
+    mr()
+  })
+
+  output$wPiemr<- renderPlot({
+    weightsPie(mr(), box = FALSE, col = col("Paired"))
+    mtextop(psmr())
+  })
+
+  output$wRetPiemr<- renderPlot({
+    weightedReturnsPie(mr(), box = FALSE, col = col("Paired"))
+    mtextop(psmr())
+  })
+
+  output$covRiskBPiemr<- renderPlot({
+    covRiskBudgetsPie(mr(), box = FALSE, col = col("Paired"))
+    mtextop(psmr())
   })
 
   ## optimize tab outputs - End
