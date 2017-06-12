@@ -534,17 +534,17 @@ shinyServer(function(input, output) {
   })
 
   output$wPiemv<- renderPlot({
-    weightsPie(mv(), box = FALSE, col = col("Paired"))
+    weightsPie(mv(), box = FALSE, col = col("Accent"))
     mtextop(psmv())
   })
 
   output$wRetPiemv<- renderPlot({
-    weightedReturnsPie(mv(), box = FALSE, col = col("Paired"))
+    weightedReturnsPie(mv(), box = FALSE, col = col("Accent"))
     mtextop(psmv())
   })
 
   output$covRiskBPiemv<- renderPlot({
-    covRiskBudgetsPie(mv(), box = FALSE, col = col("Paired"))
+    covRiskBudgetsPie(mv(), box = FALSE, col = col("Accent"))
     mtextop(psmv())
   })
 
@@ -591,17 +591,17 @@ shinyServer(function(input, output) {
   })
 
   output$wPiemr<- renderPlot({
-    weightsPie(mr(), box = FALSE, col = col("Paired"))
+    weightsPie(mr(), box = FALSE, col = col("Set1"))
     mtextop(psmr())
   })
 
   output$wRetPiemr<- renderPlot({
-    weightedReturnsPie(mr(), box = FALSE, col = col("Paired"))
+    weightedReturnsPie(mr(), box = FALSE, col = col("Set1"))
     mtextop(psmr())
   })
 
   output$covRiskBPiemr<- renderPlot({
-    covRiskBudgetsPie(mr(), box = FALSE, col = col("Paired"))
+    covRiskBudgetsPie(mr(), box = FALSE, col = col("Set1"))
     mtextop(psmr())
   })
 
