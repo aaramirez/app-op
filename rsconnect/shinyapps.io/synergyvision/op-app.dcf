@@ -3,9 +3,9 @@ title: op-app
 account: synergyvision
 server: shinyapps.io
 appId: 187129
-bundleId: 858711
+bundleId: 863344
 url: https://synergyvision.shinyapps.io/op-app/
-when: 1496945807.38005
+when: 1497277770.07759
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: www/19assets.csv|www/2tech.csv|www/4tech.csv|www/smallcap.csv|www/tech.csv
