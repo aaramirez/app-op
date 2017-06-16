@@ -21,7 +21,8 @@ source("text.R")
 source("config.R")
 
 header<-dashboardHeader(
-  title = tags$img(src="img/vision.png", width=100))
+  title = "op-app")
+  #title = tags$img(src="img/vision.png", width=100))
 
 menu<-dashboardSidebar(
   sidebarMenu(
@@ -250,6 +251,9 @@ grouptab<-tabItem(
       tabPanel(
         icon = icon("check-circle"), title = KMEANSTABTITLE_TEXT,
         fluidRow(
+          box(width = 12, title = CLUSTERS_TEXT,
+              uiOutput("clustersui")
+          ),
           box(width = 12, title = KMEANSPLOTTITLE_TEXT,
               verbatimTextOutput("kmeanstext")
           )

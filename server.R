@@ -300,9 +300,13 @@ shinyServer(function(input, output) {
     ahclust()
   })
 
+  output$clustersui<- renderUI({
+    sliderInput("clusters", label="", min=1, max =length(symbols())-1, value = 2, step = 1)
+  })
+
   akmeans<- function() {
     fAssets::assetsSelect(returns(), method="kmeans",
-                          control=c(centers=2, algorithm="Hartigan-Wong"))
+                          control=c(centers=input$clusters, algorithm="Hartigan-Wong"))
   }
 
   output$kmeanstext<- renderPrint({

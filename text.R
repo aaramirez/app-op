@@ -149,7 +149,7 @@ STDDEV_TEXT<-"Desviación estandar"
 COVAR_TEXT<-"Covarianza"
 COR_TEXT<-"Correlación"
 
-
+CLUSTERS_TEXT<-"Número de clusters"
 
 
 
