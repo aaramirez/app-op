@@ -58,8 +58,8 @@ shinyServer(function(input, output) {
   }
 
   returns<- reactive({
-    #returnsresult<-exp(diff(log(prices()))) - 1
-    ##returnsresult<-diff(log(prices()))
+    #returnsresult<-exp(diff(log(prices()))) - 1 # Discreto
+    ##returnsresult<-diff(log(prices()))         # Continuo
     timeSeries::returns(prices(), method=input$returnsType)
   })
 
