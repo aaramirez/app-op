@@ -1,0 +1,275 @@
+---
+title: "Histogramas - Distancias"
+author: "Alexander A. Ramírez M."
+date: "8/7/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages("fMultivar")
+library(fMultivar)
+```
+
+## Carga de Datos
+
+Cargamos la serie de tiempo y creamos los vectores con los datos que vamos a utilizar.
+
+```{r}
+#Carga de datos desde el csv
+data<-read.csv("4tech.csv")
+prices<-as.timeSeries(data)
+#Cálculo de retornos
+returns<-timeSeries::returns(prices, method="continuous")
+symbols<-names(prices)
+
+#Creación del vector de retornos de FB
+FB<-as.vector(returns[,"FB"])
+sorted.FB<-sort(FB)
+#Creación del vector de retornos de AAPL
+AAPL<-as.vector(returns[,"AAPL"])
+sorted.AAPL<-sort(AAPL)
+```
+
+## Gráficos con el paquete fMultivar
+
+Tomamos los gráficos generados mediante el paquete fMultivar como referencia.
+Se pueden estudiar las [fuentes de fMultivar](https://github.com/cran/fMultivar/blob/master/R/utils-binning2d.R) para conocer la forma como se construyen estos gráficos.
+
+```{r}
+par(mfrow=c(1,2))
+hexHist<-hexBinning(returns[,c("FB","AAPL")], bin=30)
+plot(hexHist, xlab="FB", ylab="AAPL", col=rev(greyPalette(30)))
+
+sqrHist<-squareBinning(returns[,c("FB","AAPL")], bin=30)
+plot(sqrHist, xlab="FB", ylab="AAPL", col=rev(greyPalette(30)))
+par(mfrow=c(1,1))
+```
+
+## Gráfico de datos (FB vs. AAPL)
+
+Hemos hecho un gráfico tradicional de las dos series de tiempo.
+
+```{r}
+plot(FB,AAPL,type="p", pch=19, cex=0.01, col="black")
+rug(sorted.FB, ticksize = 0.01, side = 3)
+rug(sorted.AAPL, ticksize = 0.01, side = 4)
+```
+
+Hemos hecho un gráfico similar para entender el proceso de cómo se hace el gráfico partiendo de una cuadrícula y una escala de colores.
+
+```{r}
+bin<-30
+
+#Cálculo del mínimo y máximo de FB
+FB.min<-min(FB)
+FB.max<-max(FB)
+#Partición del invervalo en bin partes
+xbinsize<-(FB.max-FB.min)/bin
+
+#Cálculo de mínimo y máximo de AAPL
+AAPL.min<-min(AAPL)
+AAPL.max<-max(AAPL)
+#Partición del invervalo en bin partes
+ybinsize<-(AAPL.max-AAPL.min)/bin
+
+#Creación de la matriz de frecuencias para
+#colocar cada punto en su cuadrícula respectiva
+freqmatrix<-matrix(rep(0, len=bin*bin), nrow=bin, ncol=bin)
+
+for (xdata in 1:length(FB)) {
+  xbin<-1
+  while ((FB.min+xbinsize*xbin) < FB[xdata]) {
+      xbin<-xbin+1
+  }
+  ybin<-1
+  while ((AAPL.min+ybinsize*ybin) < AAPL[xdata]) {
+      ybin<-ybin+1
+  }
+  #print(paste("FB[xdata]=",FB[xdata],"AAPL[xdata]=",AAPL[xdata],"xbin=",xbin,"ybin=",ybin))
+  freqmatrix[xbin-1,ybin-1]<-freqmatrix[xbin-1,ybin-1] + 1
+}
+
+#Cálculo del máximo y generación de la paleta de colores
+#en escala de grises
+fmmax<-max(freqmatrix)
+bincolors<-rev(greyPalette(fmmax))
+
+#Creación de la matriz de los colores que corresponden a cada 
+#cuadrícula
+colormatrix<-matrix(rep("#ffffff", len=bin*bin), nrow=bin, ncol=bin)
+
+for (j in 1:bin) {
+  for (i in 1:bin) {
+    if (freqmatrix[i,j] != 0)
+      colormatrix[i,j]<-bincolors[freqmatrix[i,j]]
+  }
+}
+
+#Dibujar el marco del gráfico
+plot(FB,AAPL,type="n")
+#Dibular cada cuadrícula con el color correspondiente
+for (y in 0:(bin-1)) {
+  for (x in 0:(bin-1)) {
+    xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
+    ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
+    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+  }
+}
+
+#Dibujo de los puntos sobre la cuadrícula
+points(FB,AAPL,type="p", pch=19, cex=0.01, col="black")
+#Dibujo del la regleta
+rug(FB, ticksize = 0.01, side = 3)
+rug(AAPL, ticksize = 0.01, side = 4)
+```
+
+En este caso vamos a dibujar el gráfico sin los puntos para apreciar los colores y la escala.
+
+```{r}
+#Dibujar el marco del gráfico
+plot(FB,AAPL,type="n")
+#Dibular cada cuadrícula con el color correspondiente
+for (y in 0:(bin-1)) {
+  for (x in 0:(bin-1)) {
+    xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
+    ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
+    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+  }
+}
+
+#Dibujo del la regleta
+rug(FB, ticksize = 0.01, side = 3)
+rug(AAPL, ticksize = 0.01, side = 4)
+```
+
+## Histogramas tradicionales
+
+Ahora vamos a dibujar el histograma de los retornos de cada serie de tiempo
+
+```{r}
+hist(FB, breaks = 100)
+rug(FB, ticksize = 0.01, side = 1)
+
+hist(AAPL, breaks = 100)
+rug(AAPL, ticksize = 0.01, side = 1)
+```
+
+En este caso vamos a dibujar el histograma de la distancia euclidea entre los elementos de la serie de tiempo.
+
+$$
+d_i = |FB[i]-AAPL[i]|
+$$
+
+```{r}
+pairdistance<-abs(FB-AAPL)
+hist(pairdistance, breaks = 100)
+rug(pairdistance, ticksize = 0.01, side = 1)
+```
+
+Ahora vamos a dibujar el histograma de la distancia sin tomar el valor absoluto.
+
+$$
+d_i = FB[i]-AAPL[i]
+$$
+
+```{r}
+pairdistance<-FB-AAPL
+hist(pairdistance, breaks = 100)
+rug(pairdistance, ticksize = 0.01, side = 1)
+```
+
+Ahora vamos a calcular la distancia entre cada par de elementos de la serie de tiempo para dibujar el histograma correspondiente.
+
+```{r}
+# Calcular las distancias entre los puntos
+edistance<-function(x,y,abs=TRUE) {
+  if (abs) abs(x-y)
+  else x-y
+}
+
+#Creación de la matriz de distancias y asignación del valor
+dmatrix<-matrix(rep(0,len=length(FB)*length(AAPL)), nrow=length(FB), ncol=length(AAPL))
+
+for (i in 1:length(FB)) {
+  for (j in 1:length(AAPL)) {
+    dmatrix[i,j]<-edistance(FB[i], AAPL[j], abs = FALSE)
+  }
+}
+
+#Dibujo del histograma
+dvector<-as.vector(dmatrix)
+hist(dvector, breaks=100)
+rug(dvector, ticksize = 0.01, side = 1)
+```
+
+Ahora vamos a calcular el valor absoluto de la distancia entre cada par de elementos de la serie de tiempo para dibujar el histograma correspondiente.
+
+```{r}
+# Calcular las distancias entre los puntos
+#
+edistance<-function(x,y,abs=TRUE) {
+  if (abs) abs(x-y)
+  else x-y
+}
+
+dmatrix<-matrix(rep(0,len=length(FB)*length(AAPL)), nrow=length(FB), ncol=length(AAPL))
+
+for (i in 1:length(FB)) {
+  for (j in 1:length(AAPL)) {
+    dmatrix[i,j]<-edistance(FB[i], AAPL[j], abs = TRUE)
+  }
+}
+
+dvector<-as.vector(dmatrix)
+hist(dvector, breaks=100)
+rug(dvector, ticksize = 0.01, side = 1)
+```
+
+Finalmente, se calcula la distancia entre cada retorno de una misma serie y se colocan en pares para dibujar la serie bivariada. Luego se dibuja gráfico de 
+
+```{r}
+edistance<-function(x,y,abs=TRUE) {
+  if (abs) abs(x-y)
+  else x-y
+}
+
+dvector.FB<-c()
+dvector.AAPL<-c()
+sample.FB<-sample(FB, 500)
+sample.AAPL<-sample(AAPL, 500)
+for (i in 1:(length(sample.FB)-1)) {
+  for(j in (i+1):(length(sample.FB)-1)) {
+    dvector.FB<-c(dvector.FB, edistance(sample.FB[i],sample.FB[j],abs=FALSE))
+    dvector.AAPL<-c(dvector.AAPL, edistance(sample.AAPL[i],sample.AAPL[j],abs=FALSE))
+  }
+}
+
+hexHist<-hexBinning(cbind(dvector.FB, dvector.AAPL), bin=30)
+plot(hexHist, xlab="FB", ylab="AAPL", col=rev(greyPalette(30)))
+
+hexHist<-squareBinning(cbind(dvector.FB, dvector.AAPL), bin=30)
+plot(hexHist, xlab="FB", ylab="AAPL", col=rev(greyPalette(30)))
+```
+
+El mismo ejercicio pero con el valor absoluto de la distancia.
+
+```{r}
+dvector.FB<-c()
+dvector.AAPL<-c()
+sample.FB<-sample(FB, 500)
+sample.AAPL<-sample(AAPL, 500)
+for (i in 1:(length(sample.FB)-1)) {
+  for(j in (i+1):(length(sample.FB)-1)) {
+    dvector.FB<-c(dvector.FB, edistance(sample.FB[i],sample.FB[j],abs=TRUE))
+    dvector.AAPL<-c(dvector.AAPL, edistance(sample.AAPL[i],sample.AAPL[j],abs=TRUE))
+  }
+}
+
+hexHist<-hexBinning(cbind(dvector.FB, dvector.AAPL), bin=30)
+plot(hexHist, xlab="FB", ylab="AAPL", col=rev(greyPalette(30)))
+
+hexHist<-squareBinning(cbind(dvector.FB, dvector.AAPL), bin=30)
+plot(hexHist, xlab="FB", ylab="AAPL", col=rev(greyPalette(30)))
+```
