@@ -43,7 +43,7 @@ hexHist<-hexBinning(returns[,c("FB","AAPL")], bin=30)
 plot(hexHist, xlab="FB", ylab="AAPL", col=rev(greyPalette(30)))
 
 sqrHist<-squareBinning(returns[,c("FB","AAPL")], bin=30)
-plot(sqrHist, xlab="FB", ylab="AAPL", col=rev(greyPalette(30)))
+plot(sqrHist, xlab="FB", ylab="AAPL", addPoints=FALSE ,col=rev(greyPalette(30)))
 par(mfrow=c(1,1))
 ```
 
@@ -66,29 +66,22 @@ bin<-30
 FB.min<-min(FB)
 FB.max<-max(FB)
 #Partición del invervalo en bin partes
-xbinsize<-(FB.max-FB.min)/bin
+xbinsize<-(FB.max-FB.min)/(bin-1)
 
 #Cálculo de mínimo y máximo de AAPL
 AAPL.min<-min(AAPL)
 AAPL.max<-max(AAPL)
 #Partición del invervalo en bin partes
-ybinsize<-(AAPL.max-AAPL.min)/bin
+ybinsize<-(AAPL.max-AAPL.min)/(bin-1)
 
 #Creación de la matriz de frecuencias para
 #colocar cada punto en su cuadrícula respectiva
 freqmatrix<-matrix(rep(0, len=bin*bin), nrow=bin, ncol=bin)
 
 for (xdata in 1:length(FB)) {
-  xbin<-1
-  while ((FB.min+xbinsize*xbin) < FB[xdata]) {
-      xbin<-xbin+1
-  }
-  ybin<-1
-  while ((AAPL.min+ybinsize*ybin) < AAPL[xdata]) {
-      ybin<-ybin+1
-  }
-  #print(paste("FB[xdata]=",FB[xdata],"AAPL[xdata]=",AAPL[xdata],"xbin=",xbin,"ybin=",ybin))
-  freqmatrix[xbin-1,ybin-1]<-freqmatrix[xbin-1,ybin-1] + 1
+  xbin<-(FB[xdata]-FB.min)%/%xbinsize + 1
+  ybin<-(AAPL[xdata]-AAPL.min)%/%ybinsize + 1
+  freqmatrix[xbin, ybin]<-freqmatrix[xbin, ybin] + 1  
 }
 
 #Cálculo del máximo y generación de la paleta de colores
@@ -107,6 +100,7 @@ for (j in 1:bin) {
   }
 }
 
+par(mfrow=c(1,2))
 #Dibujar el marco del gráfico
 plot(FB,AAPL,type="n")
 #Dibular cada cuadrícula con el color correspondiente
@@ -114,15 +108,19 @@ for (y in 0:(bin-1)) {
   for (x in 0:(bin-1)) {
     xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
     ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
-    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+    polygon(xs, ys, xpd = NA, col = colormatrix[x+1,y+1], border = "white")
   }
 }
 
 #Dibujo de los puntos sobre la cuadrícula
-points(FB,AAPL,type="p", pch=19, cex=0.01, col="black")
+#points(FB,AAPL,type="p", pch=19, cex=0.01, col="black")
 #Dibujo del la regleta
 rug(FB, ticksize = 0.01, side = 3)
 rug(AAPL, ticksize = 0.01, side = 4)
+
+sqrHist<-squareBinning(returns[,c("FB","AAPL")], bin=30)
+plot(sqrHist, xlab="FB", ylab="AAPL", addPoints=FALSE ,col=rev(greyPalette(30)))
+par(mfrow=c(1,1))
 ```
 
 En este caso vamos a dibujar el gráfico sin los puntos para apreciar los colores y la escala.
@@ -135,7 +133,7 @@ for (y in 0:(bin-1)) {
   for (x in 0:(bin-1)) {
     xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
     ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
-    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+    polygon(xs, ys, xpd = NA, col = colormatrix[x+1,y+1], border = NA)
   }
 }
 

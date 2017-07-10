@@ -66,30 +66,25 @@ bin<-30
 FB.min<-min(FB)
 FB.max<-max(FB)
 #Partición del invervalo en bin partes
-xbinsize<-(FB.max-FB.min)/bin
+xbinsize<-(FB.max-FB.min)/(bin-1)
 
 #Cálculo de mínimo y máximo de AAPL
 AAPL.min<-min(AAPL)
 AAPL.max<-max(AAPL)
 #Partición del invervalo en bin partes
-ybinsize<-(AAPL.max-AAPL.min)/bin
+ybinsize<-(AAPL.max-AAPL.min)/(bin-1)
 
 #Creación de la matriz de frecuencias para
 #colocar cada punto en su cuadrícula respectiva
 freqmatrix<-matrix(rep(0, len=bin*bin), nrow=bin, ncol=bin)
 
 for (xdata in 1:length(FB)) {
-  xbin<-1
-  while ((FB.min+xbinsize*xbin) < FB[xdata]) {
-      xbin<-xbin+1
-  }
-  ybin<-1
-  while ((AAPL.min+ybinsize*ybin) < AAPL[xdata]) {
-      ybin<-ybin+1
-  }
-  #print(paste("FB[xdata]=",FB[xdata],"AAPL[xdata]=",AAPL[xdata],"xbin=",xbin,"ybin=",ybin))
-  freqmatrix[xbin-1,ybin-1]<-freqmatrix[xbin-1,ybin-1] + 1
+  xbin<-(FB[xdata]-FB.min)%/%xbinsize + 1
+  ybin<-(AAPL[xdata]-AAPL.min)%/%ybinsize + 1
+  freqmatrix[xbin, ybin]<-freqmatrix[xbin, ybin] + 1  
 }
+
+# xdata 38, 160, 286, 474
 
 #Cálculo del máximo y generación de la paleta de colores
 #en escala de grises
@@ -114,7 +109,7 @@ for (y in 0:(bin-1)) {
   for (x in 0:(bin-1)) {
     xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
     ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
-    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+    polygon(xs, ys, xpd = NA, col = colormatrix[x+1,y+1], border = "white")
   }
 }
 
@@ -135,7 +130,7 @@ for (y in 0:(bin-1)) {
   for (x in 0:(bin-1)) {
     xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
     ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
-    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+    polygon(xs, ys, xpd = NA, col = colormatrix[x+1,y+1], border = NA)
   }
 }
 
@@ -265,29 +260,22 @@ bin<-30
 FB.min<-min(FB)
 FB.max<-max(FB)
 #Partición del invervalo en bin partes
-xbinsize<-(FB.max-FB.min)/bin
+xbinsize<-(FB.max-FB.min)/(bin-1)
 
 #Cálculo de mínimo y máximo de AAPL
 AAPL.min<-min(AAPL)
 AAPL.max<-max(AAPL)
 #Partición del invervalo en bin partes
-ybinsize<-(AAPL.max-AAPL.min)/bin
+ybinsize<-(AAPL.max-AAPL.min)/(bin-1)
 
 #Creación de la matriz de frecuencias para
 #colocar cada punto en su cuadrícula respectiva
 freqmatrix<-matrix(rep(0, len=bin*bin), nrow=bin, ncol=bin)
 
 for (xdata in 1:length(FB)) {
-  xbin<-1
-  while ((FB.min+xbinsize*xbin) < FB[xdata]) {
-      xbin<-xbin+1
-  }
-  ybin<-1
-  while ((AAPL.min+ybinsize*ybin) < AAPL[xdata]) {
-      ybin<-ybin+1
-  }
-  #print(paste("FB[xdata]=",FB[xdata],"AAPL[xdata]=",AAPL[xdata],"xbin=",xbin,"ybin=",ybin))
-  freqmatrix[xbin-1,ybin-1]<-freqmatrix[xbin-1,ybin-1] + 1
+  xbin<-(FB[xdata]-FB.min)%/%xbinsize + 1
+  ybin<-(AAPL[xdata]-AAPL.min)%/%ybinsize + 1
+  freqmatrix[xbin, ybin]<-freqmatrix[xbin, ybin] + 1  
 }
 
 #Cálculo del máximo y generación de la paleta de colores
@@ -313,7 +301,7 @@ for (y in 0:(bin-1)) {
   for (x in 0:(bin-1)) {
     xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
     ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
-    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+    polygon(xs, ys, xpd = NA, col = colormatrix[x+1,y+1], border = "white")
   }
 }
 
@@ -332,7 +320,7 @@ for (y in 0:(bin-1)) {
   for (x in 0:(bin-1)) {
     xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
     ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
-    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+    polygon(xs, ys, xpd = NA, col = colormatrix[x+1,y+1], border = NA)
   }
 }
 
@@ -377,30 +365,25 @@ bin<-30
 FB.min<-min(FB)
 FB.max<-max(FB)
 #Partición del invervalo en bin partes
-xbinsize<-(FB.max-FB.min)/bin
+xbinsize<-(FB.max-FB.min)/(bin-1)
 
 #Cálculo de mínimo y máximo de AAPL
 AAPL.min<-min(AAPL)
 AAPL.max<-max(AAPL)
 #Partición del invervalo en bin partes
-ybinsize<-(AAPL.max-AAPL.min)/bin
+ybinsize<-(AAPL.max-AAPL.min)/(bin-1)
 
 #Creación de la matriz de frecuencias para
 #colocar cada punto en su cuadrícula respectiva
 freqmatrix<-matrix(rep(0, len=bin*bin), nrow=bin, ncol=bin)
 
 for (xdata in 1:length(FB)) {
-  xbin<-1
-  while ((FB.min+xbinsize*xbin) < FB[xdata]) {
-      xbin<-xbin+1
-  }
-  ybin<-1
-  while ((AAPL.min+ybinsize*ybin) < AAPL[xdata]) {
-      ybin<-ybin+1
-  }
-  #print(paste("FB[xdata]=",FB[xdata],"AAPL[xdata]=",AAPL[xdata],"xbin=",xbin,"ybin=",ybin))
-  freqmatrix[xbin-1,ybin-1]<-freqmatrix[xbin-1,ybin-1] + 1
+  xbin<-(FB[xdata]-FB.min)%/%xbinsize + 1
+  ybin<-(AAPL[xdata]-AAPL.min)%/%ybinsize + 1
+  freqmatrix[xbin, ybin]<-freqmatrix[xbin, ybin] + 1  
 }
+
+# xdata 38, 160, 286, 474
 
 #Cálculo del máximo y generación de la paleta de colores
 #en escala de grises
@@ -425,7 +408,7 @@ for (y in 0:(bin-1)) {
   for (x in 0:(bin-1)) {
     xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
     ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
-    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+    polygon(xs, ys, xpd = NA, col = colormatrix[x+1,y+1], border = "white")
   }
 }
 
@@ -443,7 +426,7 @@ for (y in 0:(bin-1)) {
   for (x in 0:(bin-1)) {
     xs<-c(x*xbinsize, (x+1)*xbinsize, (x+1)*xbinsize, x*xbinsize)+FB.min
     ys<-c(y*ybinsize, y*ybinsize, (y+1)*ybinsize, (y+1)*ybinsize)+AAPL.min
-    polygon(xs, ys, xpd = NA, col = colormatrix[x,y], border = NA)
+    polygon(xs, ys, xpd = NA, col = colormatrix[x+1,y+1], border = NA)
   }
 }
 
